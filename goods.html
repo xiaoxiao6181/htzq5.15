@@ -1,0 +1,986 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
+        <meta content="yes" name="apple-mobile-web-app-capable">
+        <meta content="black" name="apple-mobile-web-app-status-bar-style">
+        <meta content="telephone=no" name="format-detection">
+        <meta content="email=no" name="format-detection">
+        <title data-i18n="product.tradePageTitle">交易页面</title>
+        <style type="text/css">
+            html {
+                font-size: 35px;
+            }
+        </style>
+        <link rel="stylesheet" type="text/css" href="./static/css/common.css">
+        <link rel="stylesheet" type="text/css" href="./static/css/tipmask.css">
+        <script type="text/javascript" src="./static/js/bignumber.min.js"></script>
+    </head>
+    <body>
+        <style type="text/css">
+            html {
+                font-size: 120px ;
+            }
+        </style>
+        <script type="text/javascript">
+            window.onload = function() {
+                //设置适配rem
+                var change_rem = ((window.screen.width > 450) ? 450 : window.screen.width) / 375 * 100;
+                document.getElementsByTagName("html")[0].style.fontSize = change_rem + "px";
+                window.onresize = function() {
+                    change_rem = ((window.screen.width > 450) ? 450 : window.screen.width) / 375 * 100;
+                    document.getElementsByTagName("html")[0].style.fontSize = change_rem + "px";
+                }
+            }
+        </script>
+        <script type="text/javascript" src="./static/js/jquery-1.9.1.min.js"></script>
+        <script type="text/javascript" src="./static/js/function.js"></script>
+        <script type="text/javascript" src="./static/js/base64.js"></script>
+        <script type="text/javascript">
+            var Base64 = new Base64();
+        </script>
+        <link rel="stylesheet" type="text/css" href="./static/css/ionic.css">
+        <link rel="stylesheet" type="text/css" href="./static/css/style.css?v=8">
+        <link rel="stylesheet" type="text/css" href="./static/css/trade.css?v=7">
+        <style type="text/css">
+            .box .footer {
+                height: 0.52rem;
+            }
+
+            .box .footer > div a i {
+                width: .21rem !important;
+                height: .21rem !important;
+                margin-top: .08rem;
+            }
+
+            .box .footer > div a i {
+                width: .586667rem;
+                height: .586667rem;
+            }
+
+            .box .footer > div a span {
+                font-size: .12rem !important;
+                margin-top: .02rem
+            }
+
+            .l_chartDataNav {
+                width: 100%;
+                height: 1.2rem;
+                background: #ff3d3d;
+                color: #fff;
+                overflow: hidden;
+                /*margin-top: 1.2rem;*/
+                position: relative
+            }
+
+            .l_chartDataNav .l_chartDataNavR {
+                width: 60%;
+                height: 100%;
+                float: left
+            }
+
+            .l_chartDataNav .l_chartDataNavR ul {
+                width: 100%;
+                height: 100%
+            }
+
+            .l_chartDataNav .l_chartDataNavR ul li {
+                width: 50%;
+                height: 50%;
+                float: left;
+                text-align: center;
+                line-height: .6rem;
+                font-size: .35rem;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap
+            }
+
+            .l_chartDataNav {
+                width: 100%;
+                height: 0.48rem;
+                background: #ff3d3d;
+                color: #fff;
+                overflow: hidden;
+                /*margin-top: 1.2rem;*/
+                position: relative
+            }
+
+            .l_chartDataNav .l_chartDataNavL {
+                width: 40%;
+                height: 100%;
+                float: left;
+                text-align: center;
+                line-height: 0.48rem;
+                font-size: .26rem
+            }
+
+            .l_chartDataNav .l_chartDataNavR {
+                width: 60%;
+                height: 100%;
+                float: left
+            }
+
+            .l_chartDataNav .l_chartDataNavR ul {
+                width: 100%;
+                height: 100%
+            }
+
+            .l_chartDataNav .l_chartDataNavR ul li {
+                width: 50%;
+                height: 50%;
+                float: left;
+                text-align: center;
+                line-height: .25rem;
+                font-size: .14rem;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap
+            }
+
+            .l_chart {
+                width: 100%;
+                height: 8rem;
+                background: url("/public/jpg/xtx/shijieditu.png") no-repeat;
+                background-size: 100% 100%;
+                position: relative;
+                padding-right: .333333rem
+            }
+
+            .l_chart .l_spot {
+                background: red;
+                left: 1.333333rem
+            }
+
+            .l_chart .l_spot, .l_chart .l_spot span {
+                position: absolute;
+                width: .133333rem;
+                height: .133333rem;
+                top: 0;
+                border-radius: 50%
+            }
+
+            .l_chart .l_spot span {
+                left: 0
+            }
+
+            .l_chart .l_spot .l_bigSpot {
+                width: .133333rem;
+                height: .133333rem;
+                background: rgba(240, 101, 105, .8);
+                animation: big 1.5s infinite
+            }
+
+            .l_chart .l_spot .l_centerSpot {
+                width: .2rem;
+                height: .2rem;
+                left: -.026rem;
+                top: -.0288rem;
+                background: #fff
+            }
+
+            .l_chart .l_spot .l_smallSpot {
+                background: #ef4b4f
+            }
+
+            .l_chart .l_showKlineVal {
+                display: none;
+                width: 100%;
+                height: .026667rem;
+                position: absolute
+            }
+
+            .l_chart .l_showKlineVal div {
+                width: 2rem;
+                height: .666667rem;
+                position: absolute;
+                left: 50%;
+                top: -.333333rem;
+                margin-left: -1rem;
+                text-align: center;
+                line-height: .666667rem;
+                color: #fff;
+                border-radius: .133333rem
+            }
+
+            canvas {
+                height: 452px !important;
+            }
+
+            .headerbar {
+                border: none !important;
+                height: 40px;
+                line-height: 40px;
+                background-color: white !important;
+                padding: 0;
+            }
+
+            .headerbar .header-item {
+                height: 40px;
+                line-height: 40px;
+                color: black !important;
+                font-size: 15px;
+                font-weight: 600;
+            }
+
+            .trade-content nav {
+                height: 0.4rem;
+                background: #ffffff;
+                display: flex;
+                width: 100%;
+                padding: 0 2%;
+                border-top: 1px solid lightgray;
+                border-bottom: 1px solid lightgray;
+            }
+
+            .trade-view .trade_bar {
+                bottom: 55px !important;
+                z-index: 100 !important;
+                pointer-events: auto !important;
+            }
+
+            .trade-view .trade_bar section {
+                pointer-events: auto !important;
+                cursor: pointer;
+            }
+
+            /* 下单弹窗打开时，买涨买跌沉到弹窗蒙层下面 */
+            .trade-view.order-panel-open .trade_bar {
+                z-index: 50 !important;
+                pointer-events: none !important;
+            }
+
+            #container>.txt2 {
+                position: absolute;
+                left: 13px;
+                top: 395px;
+            }
+
+            .trade-content nav article {
+                padding: 0 0.02rem;
+                flex: 2;
+                height: 0.3rem;
+                display: flex;
+                border-radius: 0.1rem;
+                background: #525256;
+                color: white;
+                margin-top: 0.05rem;
+            }
+
+            .trade-content nav article span.active {
+                color: #ff003b;
+                background: #ffffff;
+                border-radius: 0.1rem;
+                box-shadow: 0 0 2px #3e3c42;
+            }
+
+            .trade-content nav section.active {
+                color: #525256;
+                font-weight: bold;
+                border-bottom: 5px solid #525256;
+                box-shadow: 0px 0px 2px 2px;
+                border-radius: 20px;
+                height: 0.26rem;
+                line-height: 0.26rem;
+                margin-top: 0.068rem;
+            }
+
+            #container>.txt1>span.e {
+                color: #ff5382;
+            }
+			.order-confirm-panel .period-widget {
+			    padding: 5px 10px;
+			    overflow: hidden;
+				height: auto;
+				width: auto;
+			}
+        </style>
+        <script>
+            
+        </script>
+        <div id="app">
+            <div class="box">
+                <ion-nav-bar class="bar-stable headerbar nav-bar-container" nav-bar-transition="ios" nav-bar-direction="exit" nav-swipe="">
+                    <div class="nav-bar-block" nav-bar="active">
+                        <ion-header-bar class="bar-stable headerbar bar bar-header" align-title="center">
+                            <div class="buttons buttons-left" style="transition-duration: 0ms;">
+                                <span class="left-buttons">
+                                    <a href="/" class="back-button" style="transition-duration: 0ms;">
+                                        <img src="./static/img/icon_back.png" alt="" style="width: 10px;height: 15px;">
+                                    </a>
+                                </span>
+                            </div>
+                            <div class="title title-center header-item goodstitle" style="transition-duration: 0ms; transform: translate3d(0px, 0px, 0px); left: 48px; right: 48px;font-size:18px;" data-i18n="product.trading">交易</div>
+                        </ion-header-bar>
+                    </div>
+                </ion-nav-bar>
+                <ion-nav-view class="view-container" nav-view-transition="ios" nav-view-direction="exit" nav-swipe="">
+                    <ion-view class="trade-view pane" hide-nav-bar="false" state="trade" nav-view="active" style="opacity: 1; transform: translate3d(0%, 0px, 0px);">
+                        <ion-content class="trade-content content-background scroll-content ionic-scroll  has-header" scroll="true">
+                            <div class="scroll" style="transform: translate3d(0px, 0px, 0px) scale(1);">
+                                <div class="l_chartDataNav" style="background: #fff;color: black;border-top: 1px solid lightgray;">
+                                    <div class="l_chartDataNavL" id="jk">-</div>
+                                    <div class="l_chartDataNavR">
+                                        <ul>
+                                            <li ><span data-i18n="product.openPrice">开盘价</span>：<span class="openPrice"></span></li>
+                                            <li style="color:#ff3d3d;" ><span data-i18n="product.highPrice">最高价</span>：<span class="highPrice"></span></li>
+                                            <li ><span data-i18n="product.closePrice">收盘价</span>：<span class="closePrice"></span></li>
+                                            <li style="color:#26a848;"><span data-i18n="product.lowPrice">最低价</span>：<span class="lownPrice"></span></li>
+                                        </ul>
+                                    </div>
+                                    <div class="l_NoviceStepBox step4"></div>
+                                    <div class="l_NoviceStepBox step5"></div>
+                                    <div class="l_NoviceStepBox step6"></div>
+                                    <div class="l_NoviceStepBox step7"></div>
+                                    <div class="l_NoviceStepBox step8"></div>
+                                </div>
+                                <nav>
+                                    <article>
+                                        <span class="trade-chart-type stock active Kxian" onclick="change_chart_type('stock')" data-i18n="product.kLine">K线</span>
+                                        <span class="trade-chart-type line zoushi" onclick="change_chart_type('line')" data-i18n="product.fluctuation">波动</span>
+                                    </article>
+                                    <section class="trade-chart-period 1M " onclick="change_chart_period('1M')" >1M</section>
+                                    <section class="trade-chart-period 5M" onclick="change_chart_period('5M')">5M</section>
+                                    <section class="trade-chart-period 15M" onclick="change_chart_period('15M')" >15M</section>
+                                    <section class="trade-chart-period 30M" onclick="change_chart_period('30M')">30M</section>
+                                    <section class="trade-chart-period 1H" onclick="change_chart_period('1H')" >1H</section>
+                                    <section class="trade-chart-period 1D active" onclick="change_chart_period('1D')" >1D</section>
+                                </nav>
+                                <footer>
+                                    <div id="container" style="background: #ffffff;">
+                                        <div id="ecKx"></div>
+                                        <div class="txt1" style="color: gray;">
+                                            <span data-i18n="chart.time">Time</span>:<span class="a" style="color: gray;"></span>
+                                            <span class="b"></span>
+                                            <span class="c"></span>
+                                            <span class="d"></span>
+                                            <span class="e"></span>
+                                        </div>
+                                        <div class="txt2" style="color: gray;">
+                                            DIFF:
+                                            <span class="a DIFF" style="color: gray;">
+                                                <i></i>
+                                            </span>
+                                            DEA:
+                                            <span class="b DEA">
+                                                <i></i>
+                                            </span>
+                                            MACD:
+                                            <span class="c MACD">
+                                                <i></i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </footer>
+                            </div>
+                            <div class="scroll-bar scroll-bar-v">
+                                <div class="scroll-bar-indicator scroll-bar-fade-out" style="transform: translate3d(0px, 0px, 0px) scaleY(1); height: 0px;"></div>
+                            </div>
+                        </ion-content>
+                        <div class="trade_bar" style="justify-content:space-between;width:95%;margin:0 auto;right:0px;">
+                            <section onclick="toggle_order_confirm_panel('lookup')" class="" style="flex-basis:48% !important;color:#fff;background: #ff3d3d;border-radius:0.1rem;">
+                                <i class="iconfont icon--15"></i>
+                                <p class="maizhang" data-i18n="product.buyUp">买涨</p>
+                            </section>
+                            <section onclick="toggle_order_confirm_panel('lookdown')" class="" style="flex-basis:48% !important;color:#fff;background: #26a848;border-radius:0.1rem;">
+                                <i class="iconfont icon--16"></i>
+                                <p class="maidie" data-i18n="product.buyDown">买跌</p>
+                            </section>
+                        </div>
+                        <!-- ngInclude: 'templates/order-confirm-panel.html' -->
+                        <div ng-include="'templates/order-confirm-panel.html'" class="">
+                            <div class="pro_mengban ">
+                                <div class="order-confirm-panel">
+                                    <div class="panel-header">
+                                        <div >
+											<span data-i18n="product.orderConfirm">订单确认</span>
+                                            <div class="close" onclick="toggle_order_close_panel()">
+                                                <i class="icon ion-ios-close-empty close_tag"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="panel-body">
+                                        <div class="period" style="height:auto">
+                                            <p class="end_time" data-i18n="product.settlementTime">结算时间</p>
+                                            <ion-scroll direction="x" class="scroll-view ionic-scroll scroll-x" style="height:auto">
+                                                <div class="scroll" style="transform: translate3d(0px, 0px, 0px) scale(1);">
+                                                    <div class="period-widget-view">
+                                                        
+                                                    </div>
+                                                </div>
+                                                <div class="scroll-bar scroll-bar-h">
+                                                    <div class="scroll-bar-indicator scroll-bar-fade-out" style="transform: translate3d(0px, 0px, 0px) scaleX(1); width: 289px;"></div>
+                                                </div>
+                                            </ion-scroll>
+                                        </div>
+                                        <div class="amount">
+                                            <p class="invest_account tousijine" style="margin: 10px 0;">
+                                                <span class=" ng-hide  no-money" data-i18n="product.insufficientBalance">你的余额不足</span>
+                                                <span class="ng-hide no-max" style="display: flex;width: auto;justify-content: center;">
+													<span data-i18n="product.amountTooLarge" style="width: auto;">金额不能大于</span> ：
+													<span class="order_max" style="width: auto;">999999999</span>
+												</span>
+                                                <span class="ng-hide no-min" style="display: flex;width: auto;justify-content: center;">
+													<span data-i18n="product.amountTooSmall" style="width: auto;">金额必须大于</span> ：
+													<span class="order_min" style="width: auto;">100</span>
+													
+												</span>
+                                            </p>
+									
+                                            <ion-scroll direction="x" class="scroll-view ionic-scroll scroll-x">
+                                                <div class="scroll" style="transform: translate3d(0px, 0px, 0px) scale(1);">
+                                                    <div class="amount-view">
+                                                        <div class="amount-box ng-binding  all_money" data-price="200" onclick="all_money()" data-i18n="goods.allFunds">
+                                                        	全部资金
+                                                        </div>
+                                                        <script>
+                                                        	function all_money() {
+                                                        		$(".all_money").attr("data-price", $(".pay_mymoney").text());
+                                                        	}
+                                                        </script>
+                                                    </div>
+													
+                                                </div>
+                                                <div class="scroll-bar scroll-bar-h">
+                                                    <div class="scroll-bar-indicator scroll-bar-fade-out" style="transform: translate3d(0px, 0px, 0px) scaleX(1); width: 192px;"></div>
+                                                </div>
+                                            </ion-scroll>
+									
+                                            <label class="other-amount">
+                                                <input type="number" placeholder="其它金额" data-i18n-placeholder="product.otherAmount" ng-init="onfocus=false" ng-focus="onfocus==true" ng-model="order_params.other_amount" ng-keydown="min_money()" class="ng-pristine ng-untouched ng-valid ng-empty">
+                                            </label>
+                                        </div>
+                                        <div class="info-view">
+                                            <div class="ng-binding my-money" >
+                                                <span data-i18n="product.balance"></span> : <span class="pay_mymoney">-</span>
+                                            </div>
+                                            <div class="ng-binding" >
+                                                <span data-i18n="product.serviceFee">手续费</span>：<span class="order_charge">0</span>
+                                                %
+                                            </div>
+                                        </div>
+                                        <div class="order-detail-view">
+                                            <div class="order-detail">
+                                                <div class="row fields">
+                                                    <div class="col" data-i18n="product.variety">品种</div>
+                                                    <div class="col" data-i18n="product.direction">方向</div>
+                                                    <div class="col" data-i18n="product.currentPrice">现价</div>
+                                                    <div class="col" data-i18n="product.amount">金额</div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col qoute_name ng-binding goodstitle">-</div>
+                                                    <div class="col ng-binding order_type">买空</div>
+                                                    <div class="col ng-binding rise col-nowprice">-</div>
+                                                    <div class="col ng-binding" id="money"></div>
+                                                </div>
+                                                <div class="row btn_confirm">
+                                                    <div class="col">
+                                                        <button class="button" onclick="addorder()" data-i18n="product.confirmOrder">确认下单</button>
+                                                    </div>
+                                                </div>
+                                                <p class="expect_profit" style="display: none;">
+                                                    <span class="ng-binding" >
+                                                        <span data-i18n="product.expectedProfit">预期收益</span>  : <span id="yuqi"></span>
+                                                    </span>
+                                                    &nbsp;&nbsp;<span class="ng-binding" ><span data-i18n="product.expectedProfit">预期收益</span> :  0.00</span>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- ngInclude: 'templates/order-state-panel.html' -->
+                        <div class="order_mengban" id="div2">
+                            <div>
+                                <div class="order-state-panel">
+                                    <div class="panel-header">
+                                        <div class="close" onclick="close_order()">
+                                            <i class=" icon ion-ios-close-empty"></i>
+                                        </div>
+                                    </div>
+                                    <div class="panel-body">
+                                        <div class="paysuccess  ng-hide" ng-show="order_result.status == 'SUCCESS'">
+                                            <div class="circle_wrapper" ng-show="order_params.cycle.time.indexOf('-') == -1">
+                                                <div class="right_circle">
+                                                    <img class="img_circle_right" style="-webkit-animation: run 60s linear;" src="./static/img/right_circle1.png">
+                                                </div>
+                                                <div class="left_circle">
+                                                    <img class="img_circle_lift" style="-webkit-animation: runaway 60s linear;" src="./static/img/left_circle1.png">
+                                                </div>
+                                            </div>
+                                            <div class="row remaining count_remaining" ng-show="order_params.cycle.time.indexOf('-') == -1">
+                                                <div class="col">
+                                                    <div class="ng-binding pay_order_sen"></div>
+                                                    <div data-i18n="product.currentPrice">现价</div>
+                                                    <div class="ng-binding newprice">1798.148</div>
+                                                </div>
+                                            </div>
+                                            <div class="pupil_success ng-hide" ng-show="order_params.cycle.time.indexOf('-') >= 0">
+                                                <p data-i18n="product.pleaseWait">请稍后</p>
+                                                <p class="ng-binding">
+                                                    <span data-i18n="product.remainingTime">剩余时间：</span>
+                                                </p>
+                                            </div>
+                                            <div class="row info_list">
+                                                <div class="col col-15 first_info">
+                                                    <p data-i18n="product.direction">方向</p>
+                                                    <p class="ng-binding pay_order_type"></p>
+                                                </div>
+                                                <div class="col col-30">
+                                                    <p data-i18n="product.amount">金额</p>
+                                                    <p class="ng-binding">
+                                                        <span class="pay_order_price"></span>
+                                                    </p>
+                                                </div>
+                                                <div class="col col-30">
+                                                    <p data-i18n="product.currentPrice">现价</p>
+                                                    <p class="ng-binding pay_order_buypricee"></p>
+                                                </div>
+                                                <div class="col col-25 last_info">
+                                                    <p data-i18n="product.expectedProfit">结算收益</p>
+                                                    <p class="ng-binding yuce"></p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="wait" ng-show="order_result.status == 'POST'">
+                                            <div class="row">
+                                                <div class="col ng-binding">
+                                                    <i class="ion-paper-airplane"></i>
+                                                    <span data-i18n="product.pleaseWait">请稍后</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="fail ng-hide" ng-show="order_result.status == 'FAIL'">
+                                            <div class="row">
+                                                <div class="col ng-binding">
+                                                    <i class="ion-close-circled"></i>
+                                                    <span data-i18n="product.pleaseWait">请稍后</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="fail ng-hide order_fail" ng-show="order_result.status == 'FAIL'" style="">
+                                            <div class="row">
+                                                <div class="col ng-binding">
+                                                    <i class="ion-close-circled"></i>
+                                                    <span class="fail-info" style="    font-size: 18px;color: #fff;"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="ordersuccess ng-hide" style="">
+                                            <div class="row remaining finish_remaining">
+                                                <div class="col">
+                                                    <div class="result_profit ng-binding " style=""></div>
+                                                    <div class="expired_statements" data-i18n="product.settlementProfit">结算收益</div>
+                                                </div>
+                                            </div>
+                                            <div class="row info_list">
+                                                <div class="col col-15 first_info">
+                                                    <p data-i18n="product.direction">方向</p>
+                                                    <p class="ng-binding pay_order_type"></p>
+                                                </div>
+                                                <div class="col col-30">
+                                                    <p data-i18n="product.amount">金额</p>
+                                                    <p class="ng-binding">
+                                                        <span class="pay_order_price"></span>
+                                                    </p>
+                                                </div>
+                                                <div class="col col-30">
+                                                    <p data-i18n="product.currentPrice">现价</p>
+                                                    <p class="ng-binding pay_order_buypricee"></p>
+                                                </div>
+                                                <div class="col col-25 last_info">
+                                                    <p data-i18n="product.settlementPrice">结算价格</p>
+                                                    <p class="ng-binding rise endprice" style=""></p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row button_row">
+                                            <div class="col">
+                                                <button class="button" onclick="continue_order()" data-i18n="product.continueOrder">继续下单</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- ngInclude: 'templates/history-order-panel.html' -->
+                        <div class="">
+                            <div class="history-panel" ng-include="1">
+                                <div class="panel-header chicangmingxi">
+                                    <div class="close" onclick="toggle_history_order_panel()">
+                                        <i class="icon ion-ios-close-empty"></i>
+                                    </div>
+                                </div>
+                                <div class="trade_history_list">
+                                    <ion-scroll style="height: 100%" class="scroll-view ionic-scroll scroll-y">
+                                        <div class="scroll" style="transform: translate3d(0px, 0px, 0px) scale(1);">
+                                            <ul></ul>
+                                            <!-- ngIf: has_more_order -->
+                                        </div>
+                                        <div class="scroll-bar scroll-bar-v">
+                                            <div class="scroll-bar-indicator scroll-bar-fade-out" style="transform: translate3d(0px, 0px, 0px) scaleY(1); height: 0px;"></div>
+                                        </div>
+                                    </ion-scroll>
+                                </div>
+                            </div>
+                        </div>
+                    </ion-view>
+                </ion-nav-view>
+                <div class="backdrop"></div>
+                <div class="ionic_toast">
+                    <div class="toast_section" ng-class="ionicToast.toastClass" ng-style="ionicToast.toastStyle" ng-click="hideToast()" style="display: none; opacity: 0;">
+                        <span class="ionic_toast_close">
+                            <i class="ion-android-close toast_close_icon"></i>
+                        </span>
+                        <span ng-bind-html="ionicToast.toastMessage" class="ng-binding"></span>
+                    </div>
+                </div>
+                <div class="click-block click-block-hide"></div>
+                <div class="modal-backdrop hide">
+                    <div class="modal-backdrop-bg"></div>
+                    <div class="modal-wrapper" ng-transclude="">
+                        <ion-modal-view class="order-modal modal slide-in-up ng-leave ng-leave-active">
+                            <ion-header-bar class="order-modal-header bar bar-header">
+                                <h1 class="title" style="left: 54px; right: 54px;" data-i18n="product.historyOrder">历史订单</h1>
+                                <div class="close" ng-click="capital_history_modal_hide()">
+                                    <i class="icon ion-ios-arrow-left"></i>
+                                </div>
+                            </ion-header-bar>
+                            <ion-content class="person_money_list scroll-content ionic-scroll  has-header">
+                                <div class="scroll" style="transform: translate3d(0px, 0px, 0px) scale(1);">
+                                    <ion-scroll style="height:100%" class="scroll-view ionic-scroll scroll-y">
+                                        <div class="scroll" style="transform: translate3d(0px, 0px, 0px) scale(1);">
+                                            <ul></ul>
+                                        </div>
+                                        <div class="scroll-bar scroll-bar-v">
+                                            <div class="scroll-bar-indicator scroll-bar-fade-out" style="height: 0px; transform: translate3d(0px, 0px, 0px) scaleY(1); transform-origin: center bottom 0px;"></div>
+                                        </div>
+                                    </ion-scroll>
+                                </div>
+                                <div class="scroll-bar scroll-bar-v">
+                                    <div class="scroll-bar-indicator scroll-bar-fade-out" style="transform: translate3d(0px, 0px, 0px) scaleY(1); height: 0px;"></div>
+                                </div>
+                            </ion-content>
+                            <div class="button-bar">
+                                <a class="button button-dark" ng-click="capital_history_modal_hide()">OK</a>
+                            </div>
+                        </ion-modal-view>
+                    </div>
+                </div>
+                <div class="footer" id="footer">
+                    
+                </div>
+                <script type="text/javascript" src="./static/js/jquery-1.9.1.min.js"></script>
+                <script type="text/javascript">
+                    $(function() {
+                        var nav = "index";
+                        if (nav == "index") {
+                            $(".one").addClass("router-link-exact-active");
+                        }
+                        if (nav == "wallet") {
+                            $(".two").addClass("router-link-exact-active");
+                        }
+                        if (nav == "hold") {
+                            $(".three").addClass("router-link-exact-active");
+                        }
+                        if (nav == "yeb") {
+                            $(".four").addClass("router-link-exact-active");
+                        }
+                        if (nav == "user") {
+                            $(".five").addClass("router-link-exact-active");
+                        }
+                    })
+                </script>
+            </div>
+        </div>
+        
+        <!-- 提示弹窗（和登录页面相同） -->
+        <div class="tipMask hide">
+            <div class="cont">
+                <p class="title" data-i18n="common.prompt">提示</p>
+                <p class="stitle contents"></p>
+                <div id="msgBtn">
+                    <div class="confirm guanbi" style="background-color:#33B497;" data-i18n="common.confirm">确认</div>
+                </div>
+            </div>
+        </div>
+        
+    </body>
+    <script type="text/javascript" src="./static/js/order.js"></script>
+    <script type="text/javascript" src="./static/js/layer.js"></script>
+    <script type="text/javascript" src="./static/js/lodash.min.js"></script>
+	<script src="./static/js/i18n.js"></script>
+    <script type="text/javascript" src="./static/js/chardata.js?v=8"></script>
+    <script type="text/javascript" src="./static/js/echarts.js"></script>
+    <script type="text/javascript" src="./static/js/m.js"></script>
+	<script src="./static/js/ajaxUtil.js"></script>
+	<script src="./static/js/utils.js"></script>
+	<script src="./static/js/footer.js"></script>
+    <script>
+		var order_type = 0;
+		
+		var order_price = 100;
+		var order_sen = 30;
+		var order_shouyi = 20;
+		var order_kuishun = 10;
+		var newprice = 1798.148;
+		//实时价格
+		var rawData_data = [];
+		var my_money = 332339.88;
+		var order_min_price = 100;
+		var order_max_price = 999999999;
+        var goodsId = new URLSearchParams(window.location.search).get('id');
+		var order_pid =goodsId;
+        let config=localStorage.getItem('config')
+        let configData=null
+		let isRealMe=false
+		AjaxUtil.get('/index/user/getAuthCertification').then(res => {
+		    console.log(res);
+			
+		    if (res.code == 1&&res.data.info&&res.data.info.review_status==1) {
+				isRealMe=true
+			}
+		})
+        if(config){
+        	configData=JSON.parse(config)
+        	window.appOrderConfig = configData
+			order_min_price=configData.order_min || order_min_price
+			order_max_price=configData.order_max || order_max_price
+        	let order_amount_list=(configData.order_amount || '').split('|').filter(Boolean)
+        	let list_html=''
+        	order_amount_list.forEach((item,index)=>{
+        		list_html+=
+        			`
+        				<div class="amount-box ng-binding" data-price="${item}">${item}</div>
+        			`
+        		
+        	})
+        	$(".amount-view").prepend(list_html)
+        	$('.order_min').text(configData.order_min || configData.order_min_price || order_min_price)
+        	$('.order_max').text(configData.order_max || configData.order_max_price || order_max_price)
+        	if (configData.order_charge) {
+        	    $(".order_charge").text(configData.order_charge)
+        	}
+        }
+		
+        console.log(configData)
+        // 初始化语言
+        let currentLang = localStorage.getItem('preferredLanguage') || 'zh-CN';
+        I18n.init(currentLang).then(() => {
+            console.log('交易页面语言初始化完成:', I18n.currentLang);
+            // updateUIText();
+            getGoodInfo();
+            
+            // 监听语言变化
+            $(document).on('languageChanged', function(event, lang) {
+                console.log('语言已切换到:', lang);
+                updateUIText();
+            });
+        });
+        // 
+		
+        function updateUIText() {
+            if (typeof I18n === 'undefined') return;
+            
+            // 更新页面标题
+            document.title = I18n.t('product.tradePageTitle');
+            
+            // 更新所有带有data-i18n属性的元素
+            $('[data-i18n]').each(function() {
+                const $elem = $(this);
+                const key = $elem.data('i18n');
+                const text = I18n.t(key);
+                if (text) {
+                    $elem.text(text);
+                }
+            });
+            
+            // 更新输入框占位符
+            $('[data-i18n-placeholder]').each(function() {
+                const $input = $(this);
+                const key = $input.data('i18n-placeholder');
+                const placeholder = I18n.t(key);
+                if (placeholder) {
+                    $input.attr('placeholder', placeholder);
+                }
+            });
+            
+            // 更新按钮值
+            $('[data-i18n-value]').each(function() {
+                const $elem = $(this);
+                const key = $elem.data('i18n-value');
+                const value = I18n.t(key);
+                if (value) {
+                    $elem.val(value);
+                }
+            });
+            
+            // 更新结算时间小部件
+            updateSettlementWidgets();
+        }
+        
+        function updateSettlementWidgets() {
+            // 更新结算时间部件的文本
+            $('.period-widget-header[data-i18n]').each(function() {
+                const $elem = $(this);
+                const key = $elem.data('i18n');
+                $elem.text(I18n.t(key));
+            });
+            
+            $('.final_unit[data-i18n]').each(function() {
+                const $elem = $(this);
+                const key = $elem.data('i18n');
+                $elem.text(I18n.t(key));
+            });
+            
+            // 更新收益和损失文本
+            $('.period-widget-footer').each(function() {
+                const $elem = $(this);
+                const sen = $elem.closest('.period-widget').data('sen');
+                const shouyi = $elem.closest('.period-widget').data('shouyi');
+                const kuishun = $elem.closest('.period-widget').data('kuishun');
+                
+                if (sen && shouyi && kuishun) {
+                    const incomeText = I18n.t('product.income') + ':' + shouyi + '%';
+                    const lossText = I18n.t('product.loss') + ':-' + kuishun + '%';
+                    $elem.html(incomeText + '<br>' + lossText);
+                }
+            });
+        }
+        
+        function getGoodInfo(){
+            AjaxUtil.get('/index/index/goods?id='+goodsId).then(res=>{
+                if(res.code==1){
+                    let info=res.data.info;
+                    $(".goodstitle").text(info.title);
+                    
+                    let listHtml='';
+                    for (var i = 1; i < 5; i++) {
+						console.log(info['protime_'+i])
+                        if (info['protime_'+i]>0) {
+                            let timeValue = info['protime_'+i]*60;
+                            let shouyiValue = info['proscale_'+i];
+                            let kuishunValue = info['lossrate_'+i];
+							let showps = info['showps'];
+                            let showps2 = info['showps2'];
+                            let minForTime = getOrderMinBySen(timeValue, configData || window.appOrderConfig);
+                            let minLabel = (typeof I18n !== 'undefined' && I18n.t) ? I18n.t('product.minAmountLabel') : '最低';
+							
+                            listHtml+=`
+                                <div class="period-widget" data-sen="${timeValue}" data-shouyi="${shouyiValue}" data-kuishun="${kuishunValue}" style="height:auto">
+                                    <div class="period-widget-header" data-i18n="product.settlementTime">
+                                        
+										${I18n.t('product.settlementTime')}
+                                    </div>
+                                    <div class="period-widget-content">
+                                        <span class="final_time ng-binding">
+                                            ${timeValue}
+                                        </span>
+                                        <span class="final_unit" data-i18n="product.seconds">
+											${I18n.t('product.seconds')}
+                                   
+                                        </span>
+                                    </div>
+							
+                                    <div class="period-widget-footer period_footer ng-binding" style="font-size:12px;height:auto">
+                                        <span style="display:${showps==0?'none':''};">${I18n.t('product.income')}:${shouyiValue}% <br></span>
+                                        
+                                        <span style="display:${showps2==0?'none':''};">${I18n.t('product.loss')}:-${kuishunValue}%</span>
+                                        <span style="display:block;color:#666;margin-top:4px;">${minLabel}：${minForTime}</span>
+                                    </div>
+                                </div>
+                            `;
+                        }
+                    }
+                    $(".period-widget-view").html(listHtml);
+                    
+                    my_money=res.data.user.money;
+                    $(".pay_mymoney").text(res.data.user.money);
+                    
+                    if(info.protime_1){
+                        order_sen = info.protime_1*60;
+                        order_shouyi = info.proscale_1;
+                        order_kuishun = info.lossrate_1;
+                        applyOrderMinForCurrentSen();
+                        var yuqi = (((order_shouyi * 0.01 * order_price) * 10 + order_price * 10) / 10).toFixed(2);
+                        $('#yuqi').html(yuqi);
+                    }
+                    
+                    // 更新多语言文本
+                    // updateUIText();
+                }
+            })
+        }
+        
+        // 修改订单类型显示
+        function updateOrderTypeDisplay() {
+            $('.order_type').each(function() {
+                const $elem = $(this);
+                const currentText = $elem.text();
+                if (currentText.includes('买涨') || currentText === '买涨') {
+                    $elem.text(I18n.t('product.buyUp'));
+                } else if (currentText.includes('买跌') || currentText === '买跌' || currentText === '买空') {
+                    $elem.text(I18n.t('product.buyDown'));
+                }
+            });
+        }
+        
+        // 重写toggle_order_confirm_panel函数以支持多语言
+		// function toggle_order_confirm_panel(type) {
+			
+		// 	if(!isRealMe){
+		// 		alert('请先实名认证')
+		// 		return
+		// 	}
+		//     // originalToggleOrderConfirmPanel(type);
+		//     // 更新订单类型显示
+		//     setTimeout(updateOrderTypeDisplay, 100);
+		// };
+		
+        var originalToggleOrderConfirmPanel = toggle_order_confirm_panel;
+        if (typeof originalToggleOrderConfirmPanel === 'function') {
+            toggle_order_confirm_panel = function(type) {
+                try {
+                    if (typeof resetOrderOverlayState === 'function') {
+                        resetOrderOverlayState();
+                    }
+                    if (!isRealMe) {
+                        alert('请先实名认证');
+                        return;
+                    }
+                    originalToggleOrderConfirmPanel(type);
+                    setTimeout(updateOrderTypeDisplay, 100);
+                } catch (e) {
+                    console.error('toggle_order_confirm_panel wrapper error:', e);
+                    if (typeof resetOrderOverlayState === 'function') {
+                        resetOrderOverlayState();
+                    }
+                    alert('打开下单面板失败，请刷新后重试');
+                }
+            };
+        }
+        
+        $(document).ready(function() {
+            if (typeof resetOrderOverlayState === 'function') {
+                resetOrderOverlayState();
+            }
+            if (typeof I18n !== 'undefined') {
+                updateUIText();
+            }
+        });
+        
+    </script>
+    <script>
+        if (typeof resetOrderOverlayState === 'function') {
+            resetOrderOverlayState();
+        }
+		getdata(goodsId)
+        setInterval("window.location.reload();", 1000 * 60 * 5);
+        if ($('.amount-box').length) {
+            $('.amount-box').eq(0).click();
+        }
+    </script>
+</body>
+</html>

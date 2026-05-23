@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
+        <meta content="yes" name="apple-mobile-web-app-capable">
+        <meta content="black" name="apple-mobile-web-app-status-bar-style">
+        <meta content="telephone=no" name="format-detection">
+        <meta content="email=no" name="format-detection">
+        <title data-i18n="reg.title">注册账号</title>
+        <script type="text/javascript">
+            window.onload = function() {
+                //设置适配rem
+                var change_rem = ((window.screen.width > 450) ? 450 : window.screen.width) / 375 * 100;
+                document.getElementsByTagName("html")[0].style.fontSize = change_rem + "px";
+                window.onresize = function() {
+                    change_rem = ((window.screen.width > 450) ? 450 : window.screen.width) / 375 * 100;
+                    document.getElementsByTagName("html")[0].style.fontSize = change_rem + "px";
+                }
+            }
+        </script>
+        <link rel="stylesheet" type="text/css" href="./static/css/ionic.css">
+        <link rel="stylesheet" type="text/css" href="./static/css/style.css">
+        <style type="text/css">
+            /* tipMask CSS */
+            .tipMask {
+                width: 100%;
+                height: 100%;
+                background: rgba(95, 95, 95, 0.3);
+                position: fixed;
+                top: 0;
+                left: 0;
+                z-index: 3;
+            }
+
+            .hide {
+                display: none;
+            }
+
+            .tipMask .cont {
+                width: 80%;
+                padding: 5% 10%;
+                border-radius: 5px;
+                background-color: #FFFFFF;
+                position: absolute;
+                top: 30%;
+                left: 10%;
+                text-align: center;
+            }
+
+            .tipMask .cont .title {
+                /*font-size: .34rem;*/
+                /*line-height: .48rem;*/
+                color: #191919;
+            }
+
+            .tipMask .cont .stitle {
+                /*font-size: .3rem;*/
+                /*line-height: .42rem;*/
+                color: #606060;
+                /*margin-top: .36rem;*/
+            }
+
+            .tipMask .cont .confirm {
+                width: 100%;
+                height: .38rem;
+                background-color: #EF6F6C;
+                border-radius: 4px;
+                /*font-size: .34rem;*/
+                color: #fff;
+                line-height: .38rem;
+                text-align: center;
+                margin-top: .2rem;
+            }
+
+            .confirm {
+                background-color: #0084FF !important;
+            }
+
+            .newinput {
+                width: 100%;
+                height: 0.51rem;
+                border-bottom: 1px solid #ffffff;
+                padding-top: 0.2rem;
+            }
+
+            .newinput .input-text {
+                display: inline-block;
+                vertical-align: top;
+                width: 0.6rem;
+                height: 0.3rem;
+                text-align: justify;
+                text-align-last: justify;
+                font-size: 0.12rem;
+                line-height: 0.3rem;
+                color: white;
+            }
+
+            .newbutton {
+                height: 0.4rem;
+                border-radius: 0.05rem;
+                background: #c6d3ec;
+                color: #ffffff;
+                line-height: 0.4rem;
+                text-align: center;
+                font-size: 0.15rem;
+                border: none;
+            }
+
+            .signin-footer > a {
+                color: #fff3d9;
+                font-size: .14rem;
+                text-decoration: none;
+            }
+
+            .newinput input {
+                display: inline-block;
+                vertical-align: top;
+                border: none;
+                padding: 0;
+                width: 2rem;
+                height: 0.3rem;
+                color: #ffffff;
+                background: transparent;
+                font-size: 0.14rem;
+                line-height: 0.3rem;
+                margin-left: 0.1rem;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="view-container signin-view" style="background:linear-gradient(90deg,#03aaff,#3a63ff);">
+            <div style="height: 50px;line-height: 50px;font-size: 20px;font-weight: bold;color: white;text-align: center;border-bottom: 1px solid rgba(255,255,255,0.3);">
+                <span style="margin-left: 10px;float: left;" onclick="history.back(-1);">&lt;</span>
+                <span data-i18n="reg.title">注册账号</span>
+            </div>
+            <form action="" method="post" id="formid">
+                <div class="sign_up">
+                    <div class="sign_up_content">
+                        <ul class="sign_up_list">
+                            <li class="newinput">
+                                <span class="input-text" data-i18n="reg.name">姓名:
+                            </span>
+                                <input type="text" data-i18n-placeholder="reg.namePlaceholder"  id="name">
+                            </li>
+                            <li class="newinput">
+                                <span class="input-text" data-i18n="reg.username">用户名:
+                            </span>
+                                <input type="text" data-i18n-placeholder="reg.usernamePlaceholder"  id="phone">
+                            </li>
+							<li class="newinput">
+   							 <span class="input-text" data-i18n="reg.mobile">手机号:</span>
+   							 <input type="text" id="mobile" data-i18n-placeholder="reg.mobilePlaceholder" placeholder="请输入手机号">
+							</li>
+                            <li class="newinput">
+                                <span class="input-text"  data-i18n="reg.loginPassword">密码:
+                            </span>
+                                <input type="password" data-i18n-placeholder="reg.loginPasswordPlaceholder"  id="pwd">
+                            </li>
+                            <li class="newinput">
+                                <span class="input-text" data-i18n="reg.confirmPassword">确认:
+                            </span>
+                                <input type="password" data-i18n-placeholder="reg.confirmPasswordPlaceholder"  id="pwd2">
+                            </li>
+                            <li class="newinput">
+                                <span class="input-text" data-i18n="reg.paymentPassword">密码:
+                            </span>
+                                <input type="password" data-i18n-placeholder="reg.paymentPasswordPlaceholder"  id="pwd3">
+                            </li>
+                            <li class="newinput">
+                                <span class="input-text" data-i18n="reg.confirmPaymentPassword">确认:
+                            </span>
+                                <input type="password"data-i18n-placeholder="reg.confirmPaymentPasswordPlaceholder"  id="pwd4">
+                            </li>
+                        </ul>
+                        <div style="visibility:hidden;height: 50px;line-height: 50px;color: white;text-align: center;">
+                            <input type="radio" name="agreement" style="">
+                            <span style="margin-left: 10px;">用户协议</span>
+                        </div>
+                        <button class="newbutton sign_up_btn" id="reg_btn" data-i18n="reg.registerButton" type="button">确认</button>
+                    </div>
+                </div>
+            </form>
+            <div class="signin-footer">
+                <a href="./login.html" data-i18n="reg.loginLink">使用已有账号登陆</a>
+            </div>
+        </div>
+        <div class="tipMask hide">
+            <div class="cont">
+                <p class="title">提示</p>
+                <p class="stitle contents"></p>
+                <div id="msgBtn">
+                    <div class="confirm guanbi" style="background-color:#33B497;">OK</div>
+                </div>
+            </div>
+        </div>
+    </body>
+    <script src="./static/js/jquery-1.9.1.min.js"></script>
+	<script src="./static/js/ajaxUtil.js"></script>
+	<script src="./static/js/i18n.js"></script>
+	<script src="./static/js/utils.js?v=3"></script>
+    <script type="text/javascript">
+        const savedLang = localStorage.getItem('preferredLanguage') || I18n.defaultLang;
+        I18n.init(savedLang).then(() => {
+            console.log('语言初始化完成:', I18n.currentLang);
+        });
+    
+        $(function() {
+            // 定义校验规则和消息 (可以根据需要调整)
+            function validateForm() {
+                var name = $('#name').val().trim();
+                var phone = $('#phone').val().trim(); // 注意：这里的变量名是 phone，但实际是用户名
+                var pwd = $('#pwd').val();
+                var pwd2 = $('#pwd2').val();
+                var pwd3 = $('#pwd3').val();
+                var pwd4 = $('#pwd4').val();
+				var mobile = $('#mobile').val().trim();
+            
+                // 姓名校验 (示例：非空，长度限制)
+                if (!name) {
+                    msg(I18n.t('common.prompt'), I18n.t('reg.validation.nameRequired'), 1);
+                    $('#name').focus();
+                    return false;
+                }
+                if (name.length < 2 || name.length > 20) {
+                    msg(I18n.t('common.prompt'), I18n.t('reg.validation.nameLength'), 1);
+                    $('#name').focus();
+                    return false;
+                }
+            
+                // 用户名校验 (示例：必须包含数字和字母，长度6-20位)
+                if (!phone) {
+                    msg(I18n.t('common.prompt'), I18n.t('reg.validation.usernameRequired'), 1); // 新增 usernameRequired 提示
+                    $('#phone').focus(); // 注意：这里还是 phone
+                    return false;
+                }
+                // 正则表达式解释：
+                // ^           : 字符串开始
+                // (?=.*[0-9]) : 必须包含至少一个数字
+                // (?=.*[a-zA-Z]) : 必须包含至少一个字母
+                // [0-9a-zA-Z] : 只允许数字和字母
+                // {6,20}      : 长度在6到20位之间
+                // $           : 字符串结束
+                var usernameRegex = /^(?=.*[0-9])(?=.*[a-zA-Z])[0-9a-zA-Z]{6,20}$/;
+                if (!usernameRegex.test(phone)) {
+                    msg(I18n.t('common.prompt'), I18n.t('reg.validation.usernameInvalid'), 1); // 新增 usernameInvalid 提示
+                    $('#phone').focus();
+                    return false;
+                }
+            
+                // 登录密码校验 (示例：非空，长度)
+                if (!pwd) {
+                    msg(I18n.t('common.prompt'), I18n.t('reg.validation.passwordRequired'), 1);
+                    $('#pwd').focus();
+                    return false;
+                }
+                if (pwd.length < 6 || pwd.length > 20) {
+                    msg(I18n.t('common.prompt'), I18n.t('reg.validation.passwordLength'), 1);
+                    $('#pwd').focus();
+                    return false;
+                }
+            
+                // 确认登录密码校验
+                if (!pwd2) {
+                    msg(I18n.t('common.prompt'), I18n.t('reg.validation.passwordConfirmRequired'), 1);
+                    $('#pwd2').focus();
+                    return false;
+                }
+                if (pwd !== pwd2) {
+                    msg(I18n.t('common.prompt'), I18n.t('reg.validation.passwordMismatch'), 1);
+                    $('#pwd2').focus();
+                    return false;
+                }
+            
+                // 支付密码校验 (示例：6位纯数字)
+                if (!pwd3) {
+                    msg(I18n.t('common.prompt'), I18n.t('reg.validation.paymentPasswordRequired'), 1);
+                    $('#pwd3').focus();
+                    return false;
+                }
+                if (!/^\d{6}$/.test(pwd3)) { // 纯数字，6位
+                    msg(I18n.t('common.prompt'), I18n.t('reg.validation.paymentPasswordFormat'), 1);
+                    $('#pwd3').focus();
+                    return false;
+                }
+            
+                // 确认支付密码校验
+                if (!pwd4) {
+                    msg(I18n.t('common.prompt'), I18n.t('reg.validation.paymentPasswordConfirmRequired'), 1);
+                    $('#pwd4').focus();
+                    return false;
+                }
+                if (pwd3 !== pwd4) {
+                    msg(I18n.t('common.prompt'), I18n.t('reg.validation.paymentPasswordMismatch'), 1);
+                    $('#pwd4').focus();
+                    return false;
+                }
+            
+				if (!mobile) {
+   				 msg(I18n.t('common.prompt'), I18n.t('reg.validation.mobileRequired'), 1);
+   				 $('#mobile').focus();
+   				 return false;
+				}
+
+            
+                // 所有校验通过
+                return true;
+            }
+    
+            $('#reg_btn').click(function() {
+                // 在发起 AJAX 请求前先进行校验
+                if (!validateForm()) {
+                    // 如果校验失败，不执行后续的 AJAX 请求
+                    return;
+                }
+    
+                // 如果校验通过，继续执行 AJAX 请求
+                var url = baseConfig.baseUrl + "/index/login/reg";
+    
+                $.ajax({
+                    type: "POST",
+                    url: url,
+                    data: {
+                        name: $('#name').val(),
+                        phone: $('#phone').val(),
+						mobile: $('#mobile').val().trim(),
+                        password: $('#pwd').val(),
+                        password2: $('#pwd2').val(),
+                        password3: $('#pwd3').val(),
+                        password4: $('#pwd4').val(),
+                    },
+                    dataType: "text",
+                    success: function(result) {
+                        try {
+                            result = JSON.parse(result);
+                            if (result.code == 1) {
+                                if (result.data && result.data.token) {
+                                    window.localStorage.setItem('token', result.data.token);
+                                }
+                                msg(I18n.t('common.prompt'), '注册成功', 2, './index.html');
+                            } else {
+                                msg(I18n.t('common.prompt'), result.info, 1); // 后端返回的错误信息
+                            }
+                        } catch (e) {
+                            // 解析 JSON 失败
+                            console.error("Error parsing server response:", e);
+                            msg(I18n.t('common.prompt'), I18n.t('common.unknownError'), 1); // 需定义 common.unknownError
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        // AJAX 请求失败
+                        console.error("AJAX Error:", status, error);
+                        msg(I18n.t('common.prompt'), I18n.t('common.networkError'), 1); // 需定义 common.networkError
+                    }
+                });
+            })
+        });
+    
+    </script>
+</html>

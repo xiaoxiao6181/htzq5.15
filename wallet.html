@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
+        <meta content="yes" name="apple-mobile-web-app-capable">
+        <meta content="black" name="apple-mobile-web-app-status-bar-style">
+        <meta content="telephone=no" name="format-detection">
+        <meta content="email=no" name="format-detection">
+        <title data-i18n="wallet.walletTitle">我的钱包</title>
+        <style type="text/css">
+            html {
+                font-size: 35px;
+            }
+        </style>
+        <link rel="stylesheet" type="text/css" href="./static/css/common.css">
+        <link rel="stylesheet" type="text/css" href="./static/css/tipmask.css">
+        <script type="text/javascript" src="./static/js/bignumber.min.js"></script>
+    </head>
+    <body>
+        <link rel="stylesheet" type="text/css" href="./static/css/mine.css"/>
+        <link rel="stylesheet" type="text/css" href="./static/css/swiper.min.css">
+        <!--<link rel="stylesheet" type="text/css" href="./static/css/footer.css"/>-->
+        <script type="text/javascript" src="./static/js/jquery.js"></script>
+        <!-- <script type="text/javascript" src="./static/js/font.js"></script> -->
+        <script type="text/javascript" src="./static/js/public.js"></script>
+        <style type="text/css">
+            .bar {
+                position: fixed;
+                top: 0;
+                width: 100%;
+                z-index: 10;
+                height: 45px;
+                color: #fff;
+                background: linear-gradient(to right, #3476fe, #34c7fe) !important;
+                -webkit-backface-visibility: hidden;
+                backface-visibility: hidden;
+            }
+
+            #alltit {
+                position: absolute;
+                z-index: 19;
+                width: 100%;
+                text-align: center;
+                display: inline-block;
+                line-height: 45px;
+                font-size: 16px;
+                color: #fff;
+            }
+
+            .page, .page-group {
+                box-sizing: border-box;
+                margin: 0 auto;
+                overflow: hidden;
+                background: linear-gradient(56deg, #59acf1, #34a2fe);
+                height: 100%;
+            }
+
+            #main_content {
+                padding-bottom: 1rem;
+                width: 100%;
+                margin: 0 auto;
+            }
+
+            img {
+                vertical-align: middle;
+            }
+
+            .contentlist {
+                overflow: hidden;
+                width: 94%;
+                margin: 150px auto;
+            }
+
+            .contentlist li {
+                background-color: #fff;
+                width: 49%;
+                float: left;
+                padding: 0.4rem 0;
+                border-radius: 0.2rem;
+                position: relative;
+                margin-bottom: 0.2rem;
+            }
+
+            .contentlist li img {
+                position: absolute;
+                width: 28px;
+                right: 0.22rem;
+                top: 0.3rem;
+            }
+
+            .contentlist li .text1 {
+                margin-left: .3rem;
+                color: #000000;
+                display: block;
+                font-size: 14px;
+            }
+
+            .contentlist li .text2 {
+                color: #000000;
+                display: block;
+                font-size: 18px;
+                font-weight: bold;
+                margin-top: 0.2rem;
+                margin-left: .3rem;
+            }
+        </style>
+        <body>
+            <header class="bar bar-nav">
+                <a id="alltit" data-i18n="wallet.walletTitle">我的钱包</a>
+            </header>
+            <div class="page">
+                <div class="content" id="main_content">
+                    <div style="width: 100%;height: 2rem;background: linear-gradient(to right, #3476fe, #34c7fe) !important;border-radius: 5px;"></div>
+                    <div style="width:94%;margin: 0 3%;background:url('./static/img/panbg.png') no-repeat center center;background-size: 100% 100%;height: 150px;position:absolute;top: 1.1rem;padding-top: 0.6rem;">
+                        <div style="font-size: 16px;color: #fff;margin-left: 0.4rem" data-i18n="wallet.totalBalance">
+                            总余额<img class="ybtn cur" src="./static/img/yopen.png" style="width: 20px;margin-top:-0.05rem;margin-left: 0.1rem" alt="">
+                        </div>
+                        <div style="font-size: 28px;color: #fff;margin-left: 0.4rem;margin-top:0.1rem;" class="totalMoney">-</div>
+                        <div style="width: 100%;overflow:hidden;position:absolute;bottom: 0.36rem">
+                            <a href="./recharge.html">
+                                <div style="display:inline-block;width: 50%;text-align:center;font-size: 14px;color: #fff;border-right: 1px solid #fff">
+                                    <img style="width: 25px;margin-top:-0.05rem;margin-right:0.1rem" src="./static/img/czico.png" alt="">
+                                    <span data-i18n="wallet.recharge">充值</span>
+                                </div>
+                            </a>
+                            <a href="./cash.html">
+                                <div style="display:inline-block;width: 45%;text-align:center;font-size: 14px;color: #fff;">
+                                    <img style="width: 25px;margin-top:-0.05rem;margin-right:0.1rem" src="./static/img/czico.png" alt="">
+                                    <span data-i18n="wallet.withdraw">提现</span>
+                                </div>
+                            </a>
+                            <!--<a href="/index/user/exchange">-->
+                            <!--    <div style="display:inline-block;width: 24.5%;text-align:center;font-size: 14px;color: #fff;border-right: 1px solid #fff">-->
+                            <!--        <img style="width: 25px;margin-top:-0.05rem;margin-right:0.1rem" src="./static/img/txico.png" alt="">兑换</div>-->
+                            <!--</a>-->
+                            <!--<a href="javascript:msg('提示','开发中',1,'#');">-->
+                            <!--    <div style="display:inline-block;width: 24.5%;text-align:center;font-size: 14px;color: #fff;">-->
+                            <!--        <img style="width: 25px;margin-top:-0.05rem;margin-right:0.1rem" src="./static/img/txico.png" alt="">开发中</div>-->
+                            <!--</a>-->
+                        </div>
+                    </div>
+                    <style>
+                        .contentlist li {
+                            background-color: #fff;
+                            width: 100%;
+                            float: left;
+                            padding: 0.4rem 0;
+                            border-radius: 0.2rem;
+                            position: relative;
+                            margin-bottom: 0.2rem;
+                        }
+                    </style>
+                    <ul class="contentlist">
+                        <li style="margin-right: 1%;">
+                            <img src="./static/img/yeb1.png" alt="">
+                            <span class="text1" data-i18n="wallet.cashWallet">现金钱包</span>
+                            <div>
+                                <span class="text2 totalMoney" style="float:left">-</span>
+                                <span class="text2" style="float:right;margin-right:10px">=<span class="totalMoney">-</span></span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <style>
+				.footer{
+					    background-color: white;
+					    height: 1.4rem;
+					    display: flex;
+					    flex-direction: row;
+					    z-index: 100;
+				}
+                .footer>div {
+                    flex: 1;
+                    display: flex;
+                    position: relative;
+                }
+				.footer>div a {
+				    flex: 1;
+				    display: flex;
+				    flex-direction: column;
+				}
+                .footer>div a i {
+                    display: block;
+                    width: .586667rem;
+                    height: .586667rem;
+                    background: url("./static/img/market.png") no-repeat;
+                    background-size: cover;
+                    margin: 0 auto;
+                    margin-top: .173333rem
+                }
+                
+                .footer>div a span {
+                    flex: 1;
+                    text-align: center;
+                    color: gray;
+                    font-size: .293333rem;
+                    margin-top: .1rem
+                }
+                
+                .footer>div .router-link-exact-active span {
+                    color: rgb(58, 99, 255);
+                }
+                
+                .box .footer div:first-child .router-link-exact-active i {
+                    background: url("./static/img/market_active.png") no-repeat;
+                    background-size: contain;
+                    -webkit-background-size: contain
+                }
+                
+                .footer div:nth-child(2) i {
+                    background: url("./static/img/assets.png") no-repeat;
+                    background-size: cover
+                }
+                
+                .footer div:nth-child(2) .router-link-exact-active i {
+                    background: url("./static/img/assets_active.png") no-repeat;
+                    background-size: contain;
+                    -webkit-background-size: contain
+                }
+                
+                .footer div:nth-child(3) i {
+                    background: url("./static/img/trading.png") no-repeat;
+                    background-size: cover
+                }
+                
+                .footer div:nth-child(3) .router-link-exact-active i {
+                    background: url("./static/img/trading_active.png") no-repeat;
+                    background-size: contain;
+                    -webkit-background-size: contain
+                }
+                
+                .footer div:nth-child(4) i {
+                    background: url("./static/img/copy_trading.png") no-repeat;
+                    background-size: cover
+                }
+                
+                .footer div:nth-child(4) .router-link-exact-active i {
+                    background: url("./static/img/copy_trading_active.png") no-repeat;
+                    background-size: contain;
+                    -webkit-background-size: contain
+                }
+                
+                .footer div:nth-child(5) i {
+                    background: url("./static/img/user.png") no-repeat;
+                    background-size: cover
+                }
+                
+                .footer div:nth-child(5) .router-link-exact-active i {
+                    background: url("./static/img/user_active.png") no-repeat;
+                    background-size: contain;
+                    -webkit-background-size: contain
+                }
+            </style>
+			<div class="footer" id="footer">
+				
+			</div>
+            <!-- <div class="footer" style="background-color: white;display: flex;z-index: 100;">
+                <div>
+                    <a href="./index.html" class="t_span one ">
+                        <img src="./static/img/market.png">
+                        <br>
+                        <span data-i18n="nav.market">行情</span>
+                    </a>
+                </div>
+                <div>
+                    <a href="./wallet.html" class="t_span two router-link-exact-active">
+                        <img src="./static/img/assets_active.png">
+                        <br>
+                        <span style="color: rgb(58, 99, 255);" data-i18n="nav.assets">资产</span>
+                    </a>
+                </div>
+                <div>
+                    <a href="./hold.html" class="t_span three">
+                        <img src="./static/img/trading.png">
+                        <br>
+                        <span data-i18n="nav.orders">交易订单</span>
+                    </a>
+                </div>
+                <div>
+                    <a href="./yeb.html" class="t_span four">
+                        <img src="./static/img/copy_trading.png">
+                        <br>
+                        <span data-i18n="nav.finance">理财</span>
+                    </a>
+                </div>
+                <div>
+                    <a href="./user.html" class="t_span five">
+                        <img src="./static/img/user.png">
+                        <br>
+                        <span data-i18n="nav.mine">我的</span>
+                    </a>
+                </div>
+            </div> -->
+            <link rel="stylesheet" type="text/css" href="./static/css/tipmask.css">
+            <div class="tipMask" style="display:none">
+                <div class="cont">
+                    <p class="title" data-i18n="common.prompt">提示</p>
+                    <p class="stitle contents"></p>
+                    <div id="msgBtn">
+                        <div class="confirm guanbi" style="background-color:#33B497;" data-i18n="common.ok">OK</div>
+                    </div>
+                </div>
+            </div>
+            
+            <script src="./static/js/jquery-1.9.1.min.js"></script>
+            <script src="./static/js/ajaxUtil.js"></script>
+            <script src="./static/js/i18n.js"></script>
+            <script src="./static/js/utils.js"></script>
+            <script src="./static/js/footer.js"></script>
+            <script type="text/javascript">
+                // 初始化语言
+                const savedLang = localStorage.getItem('preferredLanguage') || I18n.defaultLang;
+                
+                I18n.init(savedLang).then(() => {
+                    console.log('钱包页面语言初始化完成:', I18n.currentLang);
+                    updateUIText();
+                    
+                    // 监听语言变化
+                    $(document).on('languageChanged', function(event, lang) {
+                        console.log('语言已切换到:', lang);
+                        updateUIText();
+                    });
+                });
+                
+                // 更新UI文本
+                function updateUIText() {
+                    if (typeof I18n === 'undefined') return;
+                    
+                    // 更新页面标题
+                    document.title = I18n.t('wallet.walletTitle');
+                    
+                    // 更新所有带有data-i18n属性的元素
+                    $('[data-i18n]').each(function() {
+                        const $elem = $(this);
+                        const key = $elem.data('i18n');
+                        const text = I18n.t(key);
+                        if (text) {
+                            $elem.text(text);
+                        }
+                    });
+                }
+                
+                function formatHkdAmount(amount) {
+                    if (amount === null || amount === undefined || amount === '') {
+                        return '-';
+                    }
+                    var num = parseFloat(amount);
+                    if (isNaN(num)) {
+                        return String(amount) + ' HK$';
+                    }
+                    return num + ' HK$';
+                }
+
+                // 消息提示函数（支持多语言）
+                function msg(title, content, type, url) {
+                    // 使用多语言翻译标题
+                    const titleText = typeof I18n !== 'undefined' ? I18n.t(title) || title : title;
+                    
+                    $(".contents").html(content);
+                    if (type == 1) {
+                        const okText = typeof I18n !== 'undefined' ? I18n.t('common.ok') : 'OK';
+                        var btn = '<div class="confirm guanbi" style="background-color:#33B497;" onclick="$(\'.tipMask\').hide();">' + okText + '</div>';
+                    } else {
+                        const okText = typeof I18n !== 'undefined' ? I18n.t('common.ok') : 'OK';
+                        var btn = '<div class="confirm guanbi" style="background-color:#33B497;" onclick="window.location.href=\'' + url + '\'">' + okText + '</div>';
+                    }
+                    $("#msgBtn").html(btn);
+                    $(".tipMask").show();
+                }
+                (async function() {
+					let userInfo = await getUserInfo();
+					var amountText = formatHkdAmount(userInfo && userInfo.money);
+					$(".totalMoney").text(amountText);
+				})();
+                $( function() {
+                    // 加载用户信息
+         
+                    
+                    // 导航激活状态
+                    var nav = "wallet";
+                    if (nav == "index") {
+                        $(".one").addClass("router-link-exact-active");
+                    }
+                    if (nav == "wallet") {
+                        $(".two").addClass("router-link-exact-active");
+                    }
+                    if (nav == "hold") {
+                        $(".three").addClass("router-link-exact-active");
+                    }
+                    if (nav == "yeb") {
+                        $(".four").addClass("router-link-exact-active");
+                    }
+                    if (nav == "user") {
+                        $(".five").addClass("router-link-exact-active");
+                    }
+                    
+                    // 绑定事件
+                    $(".confirm.guanbi").on('click', function() {
+                        $('.tipMask').hide();
+                    });
+                });
+            </script>
+        </body>
+    </body>
+</html>

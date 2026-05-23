@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
+        <meta content="yes" name="apple-mobile-web-app-capable">
+        <meta content="black" name="apple-mobile-web-app-status-bar-style">
+        <meta content="telephone=no" name="format-detection">
+        <meta content="email=no" name="format-detection">
+        <title>登录</title>
+        <link rel="icon" href="data:,">
+        <style type="text/css">
+            html {
+                font-size: 40px;
+            }
+        </style>
+        <link rel="stylesheet" type="text/css" href="./static/css/common.css">
+        <link rel="stylesheet" type="text/css" href="./static/css/login.css">
+        <link rel="stylesheet" type="text/css" href="./static/css/tipmask.css">
+    </head>
+    <body>
+        <form action="" method="post" id="logins">
+            <div id="app">
+                <div class="t_box_login" style="background-repeat: no-repeat;background-image: linear-gradient(90deg,#03aaff,#3a63ff);">
+                    <div style="    margin-top: 0.45rem;    color: white;">
+                        <span id="langset" style="float: right;display: inline-block;width: 2.5rem;    line-height: 30px;height: 30px;margin-right: 10px;text-align: center;border-radius: 10px;background: rgb(255,255,255,0.2);" data-i18n="language" onclick="changelang('list')">语言  V</span>
+                        <br>
+                        <div id="langlist" style="display: none;position: absolute;right: 10px;margin-top: 10px;width: 2.5rem;line-height: 30px;text-align: center;
+				    background: rgb(255,255,255,0.2);border-radius: 10px;">
+                  <!--          <span  onclick="changelang('zh-CN')">简体中文</span>
+                            <br>
+                            <span  onclick="changelang('en-US')">English</span> -->
+                   <!--         <br>
+                            <span id="langth" onclick="changelang('th')">ภาษาไทย</span>
+                            <br>
+                            <span id="langcng" onclick="changelang('hk')">繁体中文</span>
+                            <br>
+                            <span id="langth" onclick="changelang('jp')">日本语</span>
+                            <br>
+                            <span id="langth" onclick="changelang('in')">हिन्दी</span>
+                            <br>
+                            <span id="langth" onclick="changelang('kor')">한국어</span> -->
+                        </div>
+                    </div>
+                    <div class="t_logo" style="    margin-top: 2rem;">
+                        <img style="height:initial" >
+                    </div>
+                    <div class="login_box">
+                        <ul>
+                            <li>
+                                <i></i>
+                                <input type="text" data-i18n-placeholder="login.usernamePlaceholder"  name="account" id="phonenumber" style="border-radius: 5px;
+    background: none;border: 1px solid hsla(0, 0%, 100%, .3);">
+                            </li>
+                            <li>
+                                <i></i>
+                                <input type="password"  data-i18n-placeholder="login.passwordPlaceholder"  name="password" id="password" style="border-radius: 5px;
+    background: none;border: 1px solid hsla(0, 0%, 100%, .3);">
+                            </li>
+                            <li>
+                                <input type="button" value="登陆" id="login_btn" data-i18n-value="login.loginButton">
+
+                            </li>
+                            <!--<li><input type="button" value="会员注册" id="reg_btn"></li>-->
+                        </ul>
+                        <p style="padding: 0 10% 50px 10%">
+                            <a id="reg_btn" >-- <span data-i18n="login.registerLink"></span> --</a>
+                            <br>
+                            <br>
+                         -- <a class="kefu"   data-i18n="login.customerService">在线客服</a>--
+                           
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <div class="tipMask hide">
+            <div class="cont">
+                <p class="title">提示</p>
+                <p class="stitle contents"></p>
+                <div id="msgBtn">
+                    <div class="confirm guanbi" style="background-color:#33B497;">确认</div>
+                </div>
+            </div>
+        </div>
+        <script src="./static/js/jquery-1.9.1.min.js"></script>
+        <script>
+        (function($){if($&&$.Deferred&&typeof $.Deferred.prototype.catch!=='function'){$.Deferred.prototype.catch=function(fn){return this.then(null,typeof fn==='function'?fn:undefined);};}})(jQuery);
+        </script>
+		<script src="./static/js/ajaxUtil.js?v=4"></script>
+		<script src="./static/js/i18n.js"></script>
+		<script src="./static/js/utils.js"></script>
+        
+        <script type="text/javascript">
+			const savedLang = localStorage.getItem('preferredLanguage') || I18n.defaultLang;
+			I18n.init(savedLang).then(() => {
+			    console.log('语言初始化完成:', I18n.currentLang);
+			    
+			    // 点击其他地方关闭语言选择器
+			    
+			});
+			function forget(){
+  			  msg(I18n.t('common.prompt'), I18n.t('login.forget'), 1, '#')
+			}
+			function changelang(t) {
+			    if (t == "list") {
+			        $('#langlist').fadeToggle();
+			        return;
+			    } else {
+					I18n.changeLanguage(t)
+			        $('#langlist').fadeToggle();
+			    }
+			
+			}
+            $(function() {
+				
+				 let langlist=''
+				 I18n.langlist.forEach(item=>{
+					langlist+= `<span  onclick="changelang('${item.value}')">${item.name}</span> <br>`
+				 })
+				 $('#langlist').html(langlist)
+				AjaxUtil.get('/index/index/getConfigInfo').then(res => {
+					var config = saveAppConfig(res.data);
+					$(".t_logo img").attr('src',baseConfig.baseUrl +config.login_img)
+					$(".kefu").attr('href', normalizeExternalUrl(config.service))
+					// $("#service").attr('src',res.data.service)  
+				})
+                $('#reg_btn').click(function() {
+                    window.location.href = './reg.html';
+                })
+
+                $('#login_btn').click(function() {
+                    const phone = $('#phonenumber').val().trim();
+                    const password = $('#password').val().trim();
+                    
+                    if (!phone) {
+                        msg(I18n.t('common.prompt'), I18n.t('login.usernameError'), 1);
+                        return;
+                    }
+                    
+                    if (!password) {
+                        msg(I18n.t('common.prompt'), I18n.t('login.passwordError'), 1);
+                        return;
+                    }
+                    
+                    // 使用 jQuery 直连登录，避免旧版 ajaxUtil 无 .catch 导致报错
+                    $.ajax({
+                        type: 'POST',
+                        url: baseConfig.baseUrl + '/index/login',
+                        contentType: 'application/json',
+                        dataType: 'json',
+                        data: JSON.stringify({ phone: phone, password: password }),
+                        success: function(res) {
+                            if (res && res.code == 1 && res.data && res.data.token) {
+                                window.localStorage.setItem('token', res.data.token);
+                                msg(I18n.t('common.prompt'), I18n.t('login.loginSuccess'), 2, './user.html');
+                            } else {
+                                msg(I18n.t('common.prompt'), (res && res.info) || I18n.t('login.loginFailure'), 1);
+                            }
+                        },
+                        error: function(xhr) {
+                            var tip = I18n.t('login.loginFailure');
+                            try {
+                                var body = JSON.parse(xhr.responseText || '{}');
+                                if (body.info) tip = body.info;
+                            } catch (e) {}
+                            if (xhr.status === 500) {
+                                tip = tip + '（服务器错误，请确认 api.68699.im 已更新后台 Login.php 与 sys.php）';
+                            }
+                            msg(I18n.t('common.prompt'), tip, 1);
+                        }
+                    });
+                })
+            });
+           
+        </script>
+    </body>
+</html>

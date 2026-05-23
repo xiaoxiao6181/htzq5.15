@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
+        <meta content="yes" name="apple-mobile-web-app-capable">
+        <meta content="black" name="apple-mobile-web-app-status-bar-style">
+        <meta content="telephone=no" name="format-detection">
+        <meta content="email=no" name="format-detection">
+        <title>การจัดการบัตรธนาคาร</title>
+        <style type="text/css">
+            html {
+                font-size: 35px;
+            }
+        </style>
+        <link rel="stylesheet" type="text/css" href="./static/css/common.css">
+        <script type="text/javascript" src="./static/js/bignumber.min.js"></script>
+    </head>
+    <body>
+        <link rel="stylesheet" type="text/css" href="./static/css/box_pay.css">
+        <style>
+            body {
+                background: #e4e4e4;
+            }
+
+            .t_header {
+                height: 1.2rem;
+                background-color: #ffffff!important;
+                display: flex;
+                flex-direction: row;
+                position: relative;
+            }
+
+            .t_header span:last-child i {
+                font-size: .48rem;
+                position: absolute;
+                left: 46%;
+                top: 50%;
+                transform: translate(-50%, -50%);
+                color: black;
+            }
+
+            .f_box_bank .f_content ul li {
+                height: 1.333333rem;
+                line-height: 1.333333rem;
+                padding-left: 1.066666rem;
+                text-align: left;
+                background: #e4e4e4;
+                border-bottom: .026667rem solid #d4d4d4;
+                position: relative;
+                color: gray;
+            }
+
+            label {
+                cursor: default;
+                color: gray;
+            }
+        </style>
+        <div id="app">
+            <div class="box">
+                <div class="jun-content">
+                    <div class="f_box_bank">
+                        <div class="t_header">
+                            <span>
+                                <img src="./static/img/icon_back.png" alt="" onClick="javascript:history.back()">
+                            </span>
+                            <span>
+                                <i data-i18n="bank_card.title">银行卡管理</i>
+                            </span>
+                        </div>
+                        <div class="f_content">
+                            <ul class="f_withdraw">
+                                
+								
+                            </ul>
+                            <div class="addbank">
+                     <!--           <a href="https://line.me/ti/p/9YACSpNQuN" class="">
+                                    <button type="button" class="el-button el-button--danger" id="l_addBankBtn">
+                                        <span>修改银行卡请联系在线客服</span>
+                                    </button>
+                                </a> -->
+								<a href="./add_card.html">
+								    <button type="button" class="el-button el-button--danger" id="l_addBankBtn">
+								        <span data-i18n="bank_card.bindBankCard">绑定银行卡</span>
+								    </button>
+								</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="footer" id="footer">
+                    
+                </div>
+                <script src="./static/js/i18n.js"></script>
+                <script src="./static/js/jquery-1.9.1.min.js"></script>
+                <script src="./static/js/ajaxUtil.js"></script>
+				<script src="./static/js/footer.js"></script>
+                <script type="text/javascript">
+					function maskString(str) {
+					  if (str.length <= 8) {
+					    return str; // 如果字符串长度小于等于8，直接返回原字符串
+					  }
+					  
+					  const firstFour = str.substring(0, 4);
+					  const lastFour = str.substring(str.length - 4);
+					  const middleStars = '*'.repeat(str.length - 8);
+					  
+					  return firstFour + middleStars + lastFour;
+					}
+					
+					function loadBankCards() {
+					    // 更新按钮文本
+					    $('#l_modifyBankBtn span').text(I18n.t('bank_card.modifyHint'));
+					    $('#l_addBankBtn span').text(I18n.t('bank_card.bindBankCard'));
+					    
+					    // 显示加载中
+					    $('#banklist').html('<div class="loading">' + I18n.t('bank_card.loading') + '</div>');
+					    
+					    AjaxUtil.get('/index/user/getUserBankList').then(res => {
+					        if(res.code == 1 && res.data && res.data.list) {
+					            localStorage.setItem('bankCard', JSON.stringify(res.data.list));
+					            
+					            if (res.data.list.length > 0) {
+					                let banklistStr = '';
+					                res.data.list.forEach(item => {
+					                    // 根据类型显示不同的信息
+										const bankText = item.type == 2 ?  '' :  (item.bank);
+					                    const displayText = item.type == 2 ? 
+					                        (maskString(item.usdt) || I18n.t('bank_card.walletAddress')) : 
+					                        (maskString(item.account) || I18n.t('bank_card.cardNumber'));
+					                    
+					                    const nameText = item.type == 2 ? 
+					                        (item.name || '') : 
+					                        (item.name || I18n.t('bank_card.name'));
+					                    
+					                    banklistStr += `
+											<li class="banklist">
+											    <span>${bankText} ${displayText}</span>
+											    <span>${nameText}</span>
+											    <i data-myid="${item.id || ''}" class="awesome"></i>
+											</li>
+										`;
+					                });
+					                
+					                $('.f_withdraw').html(banklistStr);
+					            } else {
+					                $('.f_withdraw').html('<div class="no-data">' + I18n.t('bank_card.noBankCards') + '</div>');
+					            }
+					        } else {
+					            $('.f_withdraw').html('<div class="no-data">' + I18n.t('bank_card.noBankCards') + '</div>');
+					        }
+					    })
+					}
+					
+                    $(function() {
+						const savedLang = localStorage.getItem('preferredLanguage') || 'zh-CN';
+						I18n.init(savedLang).then(() => {
+						    console.log('语言初始化完成:', I18n.currentLang);
+						    loadBankCards();
+						});
+						
+                        var nav = "user";
+                        if (nav == "index") {
+                            $(".one").addClass("router-link-exact-active");
+                        }
+                        if (nav == "wallet") {
+                            $(".two").addClass("router-link-exact-active");
+                        }
+                        if (nav == "hold") {
+                            $(".three").addClass("router-link-exact-active");
+                        }
+                        if (nav == "yeb") {
+                            $(".four").addClass("router-link-exact-active");
+                        }
+                        if (nav == "user") {
+                            $(".five").addClass("router-link-exact-active");
+                        }
+                    })
+                </script>
+            </div>
+        </div>
+    </body>
+</html>

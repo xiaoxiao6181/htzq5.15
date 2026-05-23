@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
+        <meta content="yes" name="apple-mobile-web-app-capable">
+        <meta content="black" name="apple-mobile-web-app-status-bar-style">
+        <meta content="telephone=no" name="format-detection">
+        <meta content="email=no" name="format-detection">
+        <title data-i18n="home.homeTitle">行情</title>
+        <style type="text/css">
+            html {
+                font-size: 35px;
+            }
+        </style>
+        <link rel="stylesheet" type="text/css" href="./static/css/common.css">
+        <link rel="stylesheet" type="text/css" href="./static/css/tipmask.css">
+        <script type="text/javascript" src="./static/js/bignumber.min.js"></script>
+    </head>
+    <body>
+        <link rel="stylesheet" type="text/css" href="./static/css/swiper.min.css"/>
+        <style type="text/css">
+            body {
+                background: white;
+                overflow: auto;
+            }
+
+            span {
+                display: inline-block;
+            }
+
+            .ad {
+                width: 100%;
+                margin: 0 auto;
+                font-size: 0;
+            }
+
+            .swiper-container2 .swiper-slide {
+                line-height: 0;
+            }
+
+            .swiper-container2 .swiper-slide img {
+                width: 100%;
+            }
+
+            #d1 {
+                position: absolute;
+                top: 110px;
+                left: 20px;
+                background: #fff;
+                border-radius: 8px;
+                padding: 15px;
+                width: 80%;
+                border: 2px solid;
+                z-index: 999999
+            }
+
+            .tc1 {
+                text-align: center;
+                line-height: 35px;
+                color: red;
+                font-size: 30px;
+            }
+
+            .mp {
+                line-height: 30px;
+                height: 368px ;
+                overflow-y: scroll;
+            }
+
+            .mp img {
+                width: 100%;
+            }
+
+            .redbox {
+                height: 40px;
+                margin: 0 auto;
+                text-align: center;
+                margin-top: 8px;
+            }
+
+            .redbox .btn {
+                width: 100px;
+                margin: 0 auto;
+                text-align: center;
+                display: block;
+                height: 35px;
+                line-height: 35px;
+                color: #fff;
+                border-radius: 31px;
+                background: #000
+            }
+        </style>
+        <div id="app">
+
+            
+            <div class="ad">
+                <div class="swiper-container swiper-container2">
+                    <div class="swiper-wrapper">
+                        <!-- Banner将通过JS动态生成 -->
+                    </div>
+                </div>
+            </div>
+            <div id="announcement-container" style="padding: 10px;padding-bottom: 0;border-bottom:1px solid #d3d3d3">
+                <marquee id="notice-marquee">
+                    <font color="red"></font>
+                </marquee>
+            </div>
+            <div class="rec_lists" style="padding:10px 0;line-height:30px;text-align:center;border-bottom:1px solid #d3d3d3;padding-bottom:10px;font-size:12px">
+                <!-- 推荐列表将通过JS动态生成 -->
+            </div>
+            
+            <div style="padding:10px 20px;display:block;font-size:12px">
+                <div style="position:relative;display:inline-block;height:100px;width:60%;float:left;background:#f0f8ff;text-align:left;line-height:40px;border-radius:5px" 
+                     onclick="window.location.href='./recharge.html';">
+                    <div style="display:inline-block;height:100px;line-height:50px;width:65%;text-align:center">
+                        <p style="font-size:18px;font-weight:700" data-i18n="home.recharge">充值</p>
+                        <p>BTC/USDT/ETH</p>
+                    </div>
+                    <div style="display:inline-block;height:100px;position:absolute;line-height:100px;width:35%;text-align:center">
+                        <img src="./static/img/index_api_auth_left.b4c5c8b.png" style="width:60px;margin:25px 0">
+                    </div>
+                </div>
+                <div style="position:relative;display:inline-block;height:100px;width:38%;float:right;background:#fff;border-radius:5px">
+                    <div id="service" style="height:50px;line-height:50px;text-align:center;margin-bottom:1px;background:#f0f8ff;border-radius:5px" >
+                        <img src="./static/img/icon_my_vouchers@2x.png" style="width:30px;float:left;margin:10px">
+                        <span style="font-size:0.5rem" data-i18n="home.customerService">客服</span>
+                    </div>
+                    <div style="height:50px;line-height:50px;text-align:center;margin-top:1px;background:#f0f8ff;border-radius:5px" onclick="window.location.href='./user.html'">
+                        <img src="./static/img/mine2.png" style="width:30px;float:left;margin:10px">
+                        <span style="font-size:0.5rem" data-i18n="home.my">我的</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div style="border-bottom: 1px solid rgb(165 160 160 / 50%);"></div>
+            
+            <div class="box">
+                <div class="jun-content">
+                    <div class="t_box slide" style="background:white">
+                        <div class="t_table">
+                            <div class="t_lineher" style="display: flex;height: 30px;line-height: 30px;text-align: justify;text-align-last: center;border-bottom: 1px solid rgb(165 160 160 / 50%);color: gray;">
+                                <span style="width: 24.5%;" data-i18n="home.productName">商品名称</span>
+                                <span style="width: 24.5%;" data-i18n="home.price">价格</span>
+                                <span style="width: 24.5%;" data-i18n="home.low">最低</span>
+                                <span style="width: 24.5%;" data-i18n="home.high">最高</span>
+                            </div>
+		
+                            <div style="margin-bottom: 50px;" class="goodsList">
+                                <!-- 商品列表将通过JS动态生成 -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="footer" id="footer">
+                    
+                </div>
+                
+                <script type="text/javascript" src="./static/js/jquery-1.9.1.min.js"></script>
+                <script type="text/javascript">
+                    $(function() {
+                        var nav = "index";
+                        if (nav == "index") {
+                            $(".one").addClass("router-link-exact-active");
+                        }
+                        if (nav == "wallet") {
+                            $(".two").addClass("router-link-exact-active");
+                        }
+                        if (nav == "hold") {
+                            $(".three").addClass("router-link-exact-active");
+                        }
+                        if (nav == "yeb") {
+                            $(".four").addClass("router-link-exact-active");
+                        }
+                        if (nav == "user") {
+                            $(".five").addClass("router-link-exact-active");
+                        }
+                    })
+                </script>
+            </div>
+        </div>
+        
+        <!-- 公告弹窗 -->
+        <div id="d1" class="cox xs" style="display: none;">
+            <div class="tc">
+                <input type="submit" value="X" class="btn btn1 close" id="sday4" style="position:absolute;right:10px;top:10px;font-size:20px;display:block;width:25px;height:25px;">
+                <div class="tc1" data-i18n="home.latestNews">最新资讯</div>
+                <div class="mp">
+                    <!-- 公告内容将通过JS动态生成 -->
+                </div>
+            </div>
+        </div>
+        
+        <!-- 提示弹窗（和登录页面相同） -->
+        <div class="tipMask hide">
+            <div class="cont">
+                <p class="title" data-i18n="common.prompt">提示</p>
+                <p class="stitle contents"></p>
+                <div id="msgBtn">
+                    <div class="confirm guanbi" style="background-color:#33B497;" data-i18n="common.confirm">确认</div>
+                </div>
+            </div>
+        </div>
+        
+        <script src="./static/js/jquery-1.9.1.min.js"></script>
+        <script src="./static/js/ajaxUtil.js"></script>
+        <script src="./static/js/i18n.js"></script>
+        <script src="./static/js/utils.js?v=4"></script>
+        <script src="./static/js/swiper.min.js"></script>
+        <script src="./static/js/footer.js"></script>
+        <script>
+			var allid=[]
+            // 商品点击事件
+            function startdo(id) {
+                var closed = $('#in_' + id).attr('key');
+                if (closed == "0") {
+                    window.location.href = "./goods.html?id=" + id;
+                }
+                if (closed == "1") {
+                    msg(I18n.t('common.prompt'), I18n.t('home.notTradingTime'), 1, '#');
+                }
+            }
+            
+            // 语言切换函数（与登录页面一致）
+            function changelang(t) {
+                if (t == "list") {
+                    $('#langlist').fadeToggle();
+                    return;
+                } else {
+                    I18n.changeLanguage(t);
+                    $('#langlist').fadeToggle();
+                }
+            }
+            
+            // 加载首页数据
+            function loadHomeData() {
+                AjaxUtil.get('/index/index/home',{loadingHide:true}).then(res => {
+                    if(res.code == 1) {
+					
+						// 设置公告
+						$(".tc1").text(I18n.t('home.latestNews'));
+						// $(".mp").html(res.data.ater.content);
+						
+						// 生成Banner
+						let swiperHtml = '';
+						res.data.banner.forEach(item => {
+							swiperHtml += `<div class="swiper-slide">
+								<a href="${item.url || '#'}">
+									<img src="${baseConfig.baseUrl + item.path}" />
+								</a>
+							</div>`;
+						});
+						
+						$(".swiper-wrapper").html(swiperHtml);
+						
+						// 初始化Swiper
+						var swiper2 = new Swiper('.swiper-container2', {
+							loop: true,
+							autoplay: { delay: 3000 },
+							pagination: { el: '.swiper-pagination' }
+						});
+			
+                        
+                        
+                        // 生成产品列表
+                        let productHtml = '';
+                        $.each(res.data.product, function(k, v) {
+                            productHtml += `
+                                <div style="align-items: center;display:flex;height: 50px;line-height: 50px;text-align: center;border-bottom: 1px solid rgb(165 160 160 / 20%);color: #656565;font-weight: bold;font-size:12px!important" onclick="startdo(${v.id})">
+                                    <span id="in_${v.id}" style="width: 24.5%;" key="0">${v.title}</span>
+                                    <span style="width: 24.5%;line-height: 30px;height: 30px;border-radius: 5px;color: white;background: rgb(236, 77, 112);" id="p_${v.id}">${v.Price}</span>
+                                    <span style="width: 24.5%;" id="L_${v.id}">${v.Low}</span>
+                                    <span style="width: 24.5%;" id="H_${v.id}">${v.High}</span>
+                                </div>
+                            `;
+                        });
+                        $(".goodsList").html(productHtml);
+                        
+                        // 生成推荐列表
+                        let recHtml = '';
+                        $.each(res.data.rec_lists, function(k, v) {
+							allid.push(v.id)
+                            var ps = Number((((v.Price - v.Close) / v.Close) * 100) || 0).toFixed(1);
+                            recHtml += `
+                                <div onclick="startdo(${v.id})" style="display:inline-block;width:30%;margin-top:10px;border-radius:5px;color:#828282">
+                                    <p>${v.title}</p>
+                                    <p id="re_p_${v.id}">${v.Price}</p>
+                                    <p id="re_ps_${v.id}" close="${v.Close}" Price="${v.Price}">${ps}%</p>
+                                </div>
+                            `;
+                        });
+                        $(".rec_lists").html(recHtml);
+                        
+                        // 显示公告弹窗
+                        let noticeContent = localStorage.getItem('noticeContent');
+                        if(res.data.ater && res.data.ater.content) {
+                            if(noticeContent != res.data.ater.content) {
+								$(".mp").html(res.data.ater.content);
+                                localStorage.setItem('noticeContent', res.data.ater.content);
+                                $("#d1").show();
+                            }
+                        }
+                    }
+                })
+            }
+            
+            // 初始化函数
+            $(function() {
+                // 从localStorage获取保存的语言设置
+                const savedLang = localStorage.getItem('preferredLanguage') || I18n.defaultLang;
+                
+                // 初始化语言
+                I18n.init(savedLang).then(() => {
+                    console.log('首页语言初始化完成:', I18n.currentLang);
+                    
+                    // 动态生成语言列表
+                    let langlist = '';
+                    I18n.langlist.forEach(item => {
+                        langlist += `<span onclick="changelang('${item.value}')">${item.name}</span><br>`;
+                    });
+                    $('#langlist').html(langlist);
+                    
+                    // 加载首页数据
+					loadHomeData()
+					// setInterval(loadHomeData,1000)
+                    
+                    
+                    // 点击其他地方关闭语言选择器
+                    $(document).click(function(e) {
+                        if (!$(e.target).closest('#langset, #langlist').length) {
+                            $('#langlist').fadeOut();
+                        }
+                    });
+                });
+                
+                // 加载配置信息
+                AjaxUtil.get('/index/index/getConfigInfo').then(res => {
+                    var config = saveAppConfig(res.data);
+					if(config.notice){
+						$("#notice-marquee font").text(config.notice)
+					}else{
+						$("#announcement-container").hide()
+					}
+                    
+                    // 客服点击事件
+                    $("#service").click(function() {
+                        openServiceUrl(config.service);
+                    });
+                });
+                
+                // 关闭公告弹窗
+                $("#sday4").click(function() {
+                    $("#d1").hide();
+                });
+                
+                // 初始化Swiper
+                var swiper2 = new Swiper('.swiper-container2', {
+                    loop: true,
+                    autoplay: { delay: 3000 }
+                });
+            });
+            
+            // 获取实时数据（原有的定时更新函数保持不变）
+            function getdt() {
+                AjaxUtil.get('/index/index/ajaxdataNew',{loadingHide:true,timestamp: Date.now()}).then(datajson=>{
+					if(datajson.code==1){
+						var pro = datajson.data;
+						$.each(pro, function(k, v) {
+						    id = '#' + 'p_' + v.id;
+						    pdid = '#' + 'pd_' + v.id;
+						    lid = '#' + 'L_' + v.id;
+						    hid = '#' + 'H_' + v.id;
+						    $(id).html(v.Price);
+						    
+						    // 全部的价格进行变动
+						    if (v.is_rise == 2) {
+								console.log('绿')
+						        $(id).css('background', '#1cbbb4');
+						        $(lid).css('color', '#1cbbb4');
+						        $(hid).css('color', '#1cbbb4');
+						    } else {
+								console.log('红')
+						        $(id).css('background', '#ec4d70');
+						        $(lid).css('color', '#ec4d70');
+						        $(hid).css('color', '#ec4d70');
+						    }
+						    
+						    if (v.is_deal == 0) {
+						        $(pdid).css('background', 'rgb(58, 142, 230)');
+						        $(pdid).html(I18n.t('home.marketClosed'));
+						    } else {
+						        $(pdid).html(I18n.t('home.trading'));
+						    }
+						    
+						    // var allid = $('#rec_lists_ids').val();
+						    if (allid.indexOf(v.id) >= 0) {
+						        $('#re_p_' + v.id).text(v.Price);
+						        var close = $('#re_ps_' + v.id).attr('Close');
+						        var ps = Number((((v.Price - close) / close) * 100)).toFixed(1);
+						        $('#re_ps_' + v.id).text(ps + "%");
+						        
+						        if (v.is_rise == 2) {
+						            $('#re_p_' + v.id).css('color', '#1cbbb4');
+						            $('#re_ps_' + v.id).css('color', '#1cbbb4');
+						        } else {
+						            $('#re_p_' + v.id).css('color', '#ec4d70');
+						            $('#re_ps_' + v.id).css('color', '#ec4d70');
+						        }
+						    }
+						});
+					}
+                    
+                    
+                }) ;
+            }
+            
+            // 定时更新数据
+            // getdt();
+            window.setInterval("getdt()", 1000);
+        </script>
+    </body>
+</html>

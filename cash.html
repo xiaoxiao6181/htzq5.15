@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no"
+        name="viewport">
+        <meta content="yes" name="apple-mobile-web-app-capable">
+        <meta content="black" name="apple-mobile-web-app-status-bar-style">
+        <meta content="telephone=no" name="format-detection">
+        <meta content="email=no" name="format-detection">
+        <title data-i18n="withdraw.title">提现</title>
+        <style type="text/css">
+            
+        </style>
+        <link rel="stylesheet" type="text/css" href="./static/css/common.css">
+        <script type="text/javascript" src="./static/js/bignumber.min.js">
+        </script>
+    </head>
+    <body>
+        <link rel="stylesheet" type="text/css" href="./static/css/tipmask.css">
+        <link rel="stylesheet" type="text/css" href="./static/css/box_pay.css">
+
+        <style type="text/css">
+            html { font-size: 35px; }
+            span {
+                display: inline-block;
+            }
+
+            body {
+                background: #f9f9f9!important;
+            }
+            .t_con_pay{
+                background-color: rgba(0,0,0,0) !important;
+            }
+            .t_header{
+                    background: rgba(255, 255, 255, 0.2);
+                    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    padding: 0 20px;
+                        box-sizing: border-box;
+            }
+            .t_box_pay .t_con_pay .payment ul li{
+                background-color: rgba(0,0,0,0);
+            }
+           
+            .t_box_withdraw .t_con_withdraw div input {
+                margin-top: .133333rem;
+                height: 1.066667rem;
+                font-size: .4rem;
+                text-indent: .266667rem;
+                background-color: rgb(0,0,0,0);
+                border: none;
+                outline: none;
+                color: gray;
+				text-align: right;
+				flex: 1;
+            }
+
+            .t_box_withdraw .t_con_withdraw div label {
+                display: inline-block;
+                margin: 0;
+                color: gray;
+                width: auto;
+                font-size: .4rem;
+                height: 100%;
+                line-height: 1.333333rem;
+                float: left;
+            }
+
+            .t_box_withdraw .t_con_withdraw div {
+                height: 1.333333rem;
+                font-size: .4rem;
+				padding: 0 0.4rem;
+                border-bottom: .026667rem solid #ececec;
+                position: relative;
+                display: flex;
+                /* flex-direction: row; */
+            }
+
+            .t_box_withdraw .t_con_withdraw .notice p {
+                color: gray;
+                font-size: .32rem;
+                text-indent: .4rem;
+                margin-bottom: .133333rem;
+            }
+        </style>
+        <div id="app">
+            <div class="box">
+                <!---->
+                <div class="jun-content">
+                    <div class="t_box_withdraw">
+                        <div class="t_header">
+                            <img style="position: relative;width: .293333rem;height: .493333rem;" src="./static/img/icon_back.png" alt="" onClick="javascript:history.back()">
+                            <span>
+                                <i style="color: black;font-size: .48rem;" data-i18n="withdraw.title">提现</i>
+                            </span>
+                            <span style="font-size: 12px;flex:none;color: black;" data-i18n="withdraw.record" onClick='location.href="./cash_record.html"'>记录</span>
+                        </div>
+                        
+            
+                        <div class="t_con_withdraw" style="background-color: #ffffff;border-top: 1px solid lightgray;">
+                            <div>
+                                <label data-i18n="withdraw.paymentMethod">
+                                    收款方式
+                                </label>
+                                <div class="select">
+                                    <select name="pay_id" id="pay_id" style="width: 100%;background: none;border: none;">
+                                        
+                                    </select>
+                                </div>
+                            </div>
+                            <div>
+                                <label class="pay_type_label" data-i18n="withdraw.bankCard">
+                                    银行卡号
+                                </label>
+                                <input type="text" readonly  id="bankInfo">
+                            </div>
+                            <div>
+                                <label for="myMoney" data-i18n="withdraw.userBalance">
+                                    用户余额
+                                </label>
+                                <input type="text" id="myMoney" disabled="disabled" value="109366.20">
+                            </div>
+                            <div>
+                                <label for="withdraw" data-i18n="withdraw.amount">
+                                    提现金额
+                                </label>
+                                <input type="number" placeholder="" id="money" data-i18n-placeholder="withdraw.amountPlaceholder" onfocus="this.placeholder=''"
+                                 onblur="setPlaceholder(this)">
+                            </div>
+                            <div>
+                                <label for="withdraw" data-i18n="withdraw.conversionRate">
+                                    换算比例
+                                </label>
+                                <input type="text" disabled="true" readonly placeholder="" id="scale" data-i18n-placeholder="withdraw.conversionRate" onfocus="this.placeholder=''">
+                            </div>
+                            <div>
+                                <label for="withdraw" data-i18n="withdraw.fee">
+                                    手续费
+                                </label>
+                                <input type="text" disabled="true" readonly placeholder="" id="sxf" data-i18n-placeholder="withdraw.fee" onfocus="this.placeholder=''">
+                            </div>
+                            
+                            <div>
+                                <label for="withdraw" data-i18n="withdraw.withdrawPassword">
+                                    提现密码
+                                </label>
+                                <input type="password" placeholder="" id="pwd" data-i18n-placeholder="withdraw.passwordPlaceholder" onfocus="this.placeholder=''"
+                                onblur="setPlaceholder(this)">
+                            </div>
+                            
+                            <span class="notice">
+                                <p data-i18n="withdraw.tips">
+                                    提示：
+                                </p>
+                                <p >
+									<span data-i18n="withdraw.tip1">1.提现限制：</span>
+									<span style="text-indent: 0;" id="moneyRange">20 - 50000000</span>
+                                    
+                                </p>
+                                <p style="color:red;" >
+									<span data-i18n="withdraw.tip2">2.提现时间：</span>
+									<span style="text-indent: 0;" id="timeRange">09:00 - 23:00</span>
+									
+                                    
+                                </p>
+                                <p>
+                                    <span data-i18n="withdraw.tip3">3.若忘记提款密码，请</span>
+                                    <a target="_blank" id="service" style="color:red;" data-i18n="withdraw.clickToRetrieve">
+                                        点击找回
+                                    </a>
+                                </p>
+                            </span>
+                            <div class="t_withdraw_btn">
+                                <button id="sub_btn" onclick="postWithdraw()" type="button" data-i18n="withdraw.submit">
+                                    确认提交
+                                </button>
+                                <button id="add_btn" type="button" data-i18n="withdraw.addPaymentMethod">
+                                    增加支付方式
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="footer" id="footer">
+                    
+                </div>
+                <script type="text/javascript" src="./static/js/jquery-1.9.1.min.js">
+                </script>
+                <script src="./static/js/i18n.js"></script>
+                <script src="./static/js/ajaxUtil.js"></script>
+                <script src="./static/js/utils.js"></script>
+				<script src="./static/js/footer.js"></script>
+                <script type="text/javascript">
+                    let bankCard=JSON.parse(localStorage.getItem('bankCard'))
+                    let userInfo={}
+                    let backList=[]
+                    var pay_id=0
+                    var activeBank={}
+                    
+                    function setPlaceholder(element) {
+                        if (!element.value) {
+                            const key = element.getAttribute('data-i18n-placeholder');
+                            if (key) {
+                                element.placeholder = I18n.t(key);
+                            }
+                        }
+                    }
+                    
+                    function getRateMoney(){
+                        if(!activeBank.id){
+                            return
+                        }
+						if(!$('#money').val()){return}
+                        const price = $('#money').val();
+                        let options = {
+                            bank_id:activeBank.id,
+                            money:$('#money').val()
+                        }
+                    
+                        AjaxUtil.get('/index/user/countCashRateMoney',options).then(res => {
+                            if(res.code == 1){
+                                // 处理成功响应
+                                $("#sxf").val(res.data.rate_money)
+                                $("#scale").val("1:"+res.data.ratio_rate)
+                            } else {
+                                // 处理错误
+                                console.error('获取失败:', res.info);
+                                msg(I18n.t('common.prompt'), res.info, 1);
+                            }
+                        })
+                    }
+                    
+                    function debounce(func, delay) {
+                        let timeoutId;
+                        return function() {
+                            const context = this;
+                            const args = arguments;
+                            
+                            clearTimeout(timeoutId);
+                            timeoutId = setTimeout(() => {
+                                func.apply(context, args);
+                            }, delay);
+                        };
+                    }
+                    
+                    function postWithdraw(){
+                        let money=$("#money").val()
+                        let pwd=$("#pwd").val().trim()
+                        if(!money){
+                            msg(I18n.t('common.prompt'), I18n.t('withdraw.amountRequired'), 1);
+                            return
+                        }
+                        if(!pwd){
+                            msg(I18n.t('common.prompt'), I18n.t('withdraw.passwordRequired'), 1);
+                            return
+                        }
+                        if(!activeBank.id){
+                            msg(I18n.t('common.prompt'), I18n.t('withdraw.bankNotBound'), 1);
+                            return
+                        }
+                        let options={
+                            money:money,
+                            bank_id:activeBank.id,
+                            pwd:pwd,
+                            pay_id
+                        }
+                        AjaxUtil.post('/index/user/submitCash', options).then(res => {
+                            if(res.code==1){
+                                msg(I18n.t('common.prompt'), res.info, 2, "./cash_record.html");
+                            }else{
+                                msg(I18n.t('common.prompt'), res.info, 1);
+                            }
+                        })
+                    }
+        
+                    $( function() {
+                        (async function() {
+                            // 初始化语言
+                            const savedLang = localStorage.getItem('preferredLanguage') || I18n.defaultLang;
+                            await I18n.init(savedLang);
+                            
+                            // 设置placeholder
+                            $('input[data-i18n-placeholder]').each(function() {
+                                const key = $(this).attr('data-i18n-placeholder');
+                                if (key) {
+                                    $(this).attr('placeholder', I18n.t(key));
+                                }
+                            });
+                            
+                            userInfo=await getUserInfo()
+                            $("#myMoney").val(userInfo.money)
+                            AjaxUtil.get('/index/index/getConfigInfo').then(res => {
+                                var config = saveAppConfig(res.data);
+                                $("#service").attr('href', normalizeExternalUrl(config.service))
+								$("#moneyRange").text(`${config.cash_min}-${config.cash_max}`)
+								$("#timeRange").text(`${config.cash_start}-${config.cash_end}`)
+                            })
+                            
+                            AjaxUtil.get('/index/user/getUserBankList').then(res => {
+                                if(res.code==1){
+                                    bankCard=res.data.list
+                                    if(bankCard.length>0){
+                                        
+                                        $("#sub_btn").show()
+                                        $("#add_btn").hide()
+                                        
+                                        AjaxUtil.get('/index/index/getPayMentList?usable_type=2').then(res => {
+                                            let pay_Html=''
+                                            $.each(res.data.list, function (index, item) {
+                                                pay_Html+=`<option value="${item.id}" data-item='${JSON.stringify(item)}'>${item.title}</option>`
+                                            })
+                                            $("#pay_id").html(pay_Html)    
+                                            
+                                            pay_id=bankCard[0].pay_id
+                                            console.log(pay_id)
+                                            $("#pay_id").val(pay_id)
+                                                            
+                                            activeBank=bankCard[0]
+                                            if(res.data.list[0].type==2){
+                                                $(".pay_type_label").text(I18n.t('withdraw.walletAddress'));
+                                            }else{
+                                                $(".pay_type_label").text(I18n.t('withdraw.bankCard'));
+                                            }
+                                            
+                                            $("#bankInfo").val(maskString(bankCard[0].account||bankCard[0].usdt))    
+                                        })
+                                        
+                                        $('#pay_id').change(function() {
+                                            $("#bankInfo").val('')
+                                            activeBank={}
+                                            const selectedOption = $(this).find('option:selected');
+                                            let data=selectedOption.data('item')
+                                            pay_id=data.id
+                                            backList=bankCard.filter(item=>item.pay_id==pay_id)
+                                            if(data.type==2){
+                                                $(".pay_type_label").text(I18n.t('withdraw.walletAddress'));
+                                            }else{
+                                                $(".pay_type_label").text(I18n.t('withdraw.bankCard'));
+                                            }
+                                            console.log('backList',backList)
+                                            if(backList.length==0){
+                                                msg(I18n.t('common.prompt'), I18n.t('withdraw.currentNotBound'), 2, "./add_card.html");
+                                                return 
+                                            }
+                                            activeBank=backList[0]
+                                            $("#bankInfo").val(maskString(backList[0].account||backList[0].usdt))    
+                                            getRateMoney()
+                                        });
+                                    }else{
+                                        msg(I18n.t('common.prompt'), I18n.t('withdraw.bankRequired'), 2, "./add_card.html");
+                                        return 
+                                    }
+                                }
+                            })
+                            
+                            $("#money").on('input', debounce(function() {
+                                getRateMoney()
+                            }, 500));
+                            
+                            // 监听语言变化
+                            $(document).on('languageChanged', function(event, lang) {
+                                // 更新placeholder
+                                $('input[data-i18n-placeholder]').each(function() {
+                                    const key = $(this).attr('data-i18n-placeholder');
+                                    if (key) {
+                                        $(this).attr('placeholder', I18n.t(key));
+                                    }
+                                });
+                            });
+                            
+                            var nav = "user";
+                            if (nav == "index") {
+                                $(".one").addClass("router-link-exact-active");
+                            }
+                            if (nav == "recharge") {
+                                $(".two").addClass("router-link-exact-active");
+                            }
+                            if (nav == "hold") {
+                                $(".three").addClass("router-link-exact-active");
+                            }
+                            if (nav == "yeb") {
+                                $(".four").addClass("router-link-exact-active");
+                            }
+                            if (nav == "user") {
+                                $(".five").addClass("router-link-exact-active");
+                            }
+                        })();
+                    });
+                </script>
+            </div>
+        </div>
+        <div class="tipMask hide">
+            <div class="cont">
+                <p class="title" data-i18n="common.prompt">
+                    温馨提示
+                </p>
+                <p class="stitle contents">
+                </p>
+                <div id="msgBtn">
+                    <div class="confirm guanbi" data-i18n="common.confirm">
+                        确定
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+
+    <script type="text/javascript">
+        // 自动更新placeholder
+        function updatePlaceholders() {
+            document.querySelectorAll('[data-i18n-placeholder]').forEach(input => {
+                const key = input.getAttribute('data-i18n-placeholder');
+                if (key && window.I18n && window.I18n.t) {
+                    input.placeholder = window.I18n.t(key);
+                }
+            });
+        }
+        
+        // 初始化时设置placeholder
+        document.addEventListener('DOMContentLoaded', function() {
+            if (window.I18n && window.I18n.t) {
+                setTimeout(updatePlaceholders, 100);
+            }
+        });
+    </script>
+
+</html>

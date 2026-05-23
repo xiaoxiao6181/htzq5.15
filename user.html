@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
+        <meta content="yes" name="apple-mobile-web-app-capable">
+        <meta content="black" name="apple-mobile-web-app-status-bar-style">
+        <meta content="telephone=no" name="format-detection">
+        <meta content="email=no" name="format-detection">
+        <title data-i18n="mine.title">我的</title>
+        <style type="text/css">
+            html {
+                font-size: 35px;
+            }
+        </style>
+        <link rel="stylesheet" type="text/css" href="./static/css/common.css">
+        <script type="text/javascript" src="./static/js/bignumber.min.js"></script>
+        <!-- 添加i18n.js -->
+        <script src="./static/js/i18n.js"></script>
+    </head>
+    <body>
+        <style>
+            body {
+                background: #efefef!important;
+            }
+
+            .f_box_mine {
+                flex: 1;
+                display: flex;
+                flex-direction: column;
+                background: #efefef;
+            }
+        </style>
+        <div id="app">
+            <div class="box">
+                <div class="jun-content">
+                    <div class="f_box_mine slide">
+                        <!--头部-->
+                        <div style="position: relative;height: 45%;text-align: center;background: url(&quot;./static/img/user_bg.png&quot;)no-repeat;background-size: 100% 100%;">
+                            <div class="img_cion" style="width: 80px;    height: 80px;    display: inline-block;    margin-top: 30px;">
+                                <img  alt="" class="f_mine_header" data-src="./static/img/userimg.png" lazy="loaded" style="    border-radius: 50px;    border: 3px solid rgba(255,255,255,0.3);">
+                            </div>
+                            <p style="margin-top:20px;color: white;font-size: 16px;">
+                                <span class="username"></span>
+                            </p>
+                            <p>
+                                <span  class="userlevel" style="display: inline-block;width: 100px;line-height: 20px;height: 20px;font-size: 16px;color: #ffffff;background: #7d5dd8;border-radius: 3px;"></span>
+                            </p>
+                            <div class="f_tab2" style="height: 80px;line-height: 80px;vertical-align: middle;">
+                                <span style="display:inline-block;width: 140px;color: white;background: #66b1ff;height: 40px;line-height: 40px;border-radius: 10px;margin-right: 10px;">
+                                    <a href="./recharge.html" class="">
+                                        <p data-i18n="mine.recharge">充值</p>
+                                    </a>
+                                </span>
+                                <span style="display:inline-block;width: 140px;color: white;background: #66b1ff;height: 40px;line-height: 40px;border-radius: 10px;margin-left: 10px;">
+                                    <a href="./cash.html" class="">
+                                        <p data-i18n="mine.withdraw">提现</p>
+                                    </a>
+                                </span>
+                            </div>
+                        </div>
+                        <!--头部结束-->
+                        <!--中部-->
+                        <style>
+                            .itemlists div {
+                                border-bottom: 2px solid #efefef;
+                            }
+                        </style>
+                        <div>
+                            <!--1part-->
+                            <div class="itemlists" style="margin-top: 10px;background: white;">
+                                <div id="service" style="background: white;height: 50px;line-height: 50px;padding: 0 10px;">
+                                    <img src="./static/img/icon_my_vouchers@2x.png" style="width: 30px;height: 30px;top: 50%;position: relative;transform: translate(0,-50%);">
+                                    <span style="margin-left: 10px;" data-i18n="mine.customerService">客服</span>
+                                    <img style="float: right;top: 50%;position: relative;transform: translate(0,-50%);" src="./static/img/jt.png">
+                                </div>
+                                <div style="background: white;height: 50px;line-height: 50px;padding: 0 10px;" onclick="window.location.href='./cash_record.html'">
+                                    <img src="./static/img/abc.png" style="width: 30px;height: 30px;top: 50%;position: relative;transform: translate(0,-50%);">
+                                    <span style="margin-left: 10px;" data-i18n="mine.withdrawRecord">提现记录</span>
+                                    <img style="float: right;top: 50%;position: relative;transform: translate(0,-50%);" src="./static/img/jt.png">
+                                </div>
+                                <div style="background: white;height: 50px;line-height: 50px;padding: 0 10px;" onclick="window.location.href='./recharge_record.html'">
+                                    <img src="./static/img/ccc.png" style="width: 30px;height: 30px;top: 50%;position: relative;transform: translate(0,-50%);">
+                                    <span style="margin-left: 10px;" data-i18n="mine.rechargeRecord">充值记录</span>
+                                    <img style="float: right;top: 50%;position: relative;transform: translate(0,-50%);" src="./static/img/jt.png">
+                                </div>
+                                <div style="background: white;height: 50px;line-height: 50px;padding: 0 10px;" onclick="window.location.href='./hold.html'">
+                                    <img src="./static/img/icon_user_3.98bff3b4.png" style="width: 30px;height: 30px;top: 50%;position: relative;transform: translate(0,-50%);">
+                                    <span style="margin-left: 10px;" data-i18n="mine.tradeOrders">交易订单</span>
+                                    <img style="float: right;top: 50%;position: relative;transform: translate(0,-50%);" src="./static/img/jt.png">
+                                </div>
+                            </div>
+                            <!--2part-->
+                            <div class="itemlists" style="margin-top: 10px;background: white;">
+                                <div style="background: white;height: 50px;line-height: 50px;padding: 0 10px;" onclick="window.location.href='./bank_card.html'">
+                                    <img src="./static/img/icon_user_5.511f0cc1.png" style="width: 30px;height: 30px;top: 50%;position: relative;transform: translate(0,-50%);">
+                                    <span style="margin-left: 10px;" data-i18n="mine.paymentMethods">支付方式</span>
+                                    <img style="float: right;top: 50%;position: relative;transform: translate(0,-50%);" src="./static/img/jt.png">
+                                </div>
+                            </div>
+                            <!--3part-->
+                            <div class="itemlists" style="margin-top: 10px;background: white;">
+                                <div style="background: white;height: 50px;line-height: 50px;padding: 0 10px;" onclick="window.location.href='./set_account.html'">
+                                    <img src="./static/img/icon_user_10.safe.png" style="width: 30px;height: 30px;top: 50%;position: relative;transform: translate(0,-50%);">
+                                    <span style="margin-left: 10px;" data-i18n="mine.securitySettings">安全设置</span>
+                                    <img style="float: right;top: 50%;position: relative;transform: translate(0,-50%);" src="./static/img/jt.png">
+                                </div>
+                                <div style="background: white;height: 50px;line-height: 50px;padding: 0 10px;" onclick="showlang(1)">
+                                    <img src="./static/img/icon_user_10.6d36f5a0.png" style="width: 30px;height: 30px;top: 50%;position: relative;transform: translate(0,-50%);">
+                                    <span style="margin-left: 10px;" data-i18n="mine.changeLanguage">更换语言</span>
+                                    <img style="float: right;top: 50%;position: relative;transform: translate(0,-50%);" src="./static/img/jt.png">
+                                    <span style="float: right;color: lightgray;margin-right: 5px;" data-i18n="mine.language">语言</span>
+                                </div>
+                            </div>
+                            <div class="itemlists" style="margin-top: 10px;background: white;    margin-bottom: 55px;">
+                                <div style="background: white;height: 50px;line-height: 50px;padding: 0 10px;" onclick="window.location.href='./msg.html'">
+                                    <img src="./static/img/xx.png" style="width: 30px;height: 30px;top: 50%;position: relative;transform: translate(0,-50%);">
+                                    <span style="margin-left: 10px;" data-i18n="mine.userMessages">用户消息</span>
+                                    <img style="float: right;top: 50%;position: relative;transform: translate(0,-50%);" src="./static/img/jt.png">
+                                </div>
+                                <div style="background: white;height: 50px;line-height: 50px;padding: 0 10px;" onclick="window.location.href='./notice.html'">
+                                    <img src="./static/img/icon_my_announcement@2x.png" style="width: 30px;height: 30px;top: 50%;position: relative;transform: translate(0,-50%);">
+                                    <span style="margin-left: 10px;" data-i18n="mine.platformNotice">平台公告</span>
+                                    <img style="float: right;top: 50%;position: relative;transform: translate(0,-50%);" src="./static/img/jt.png">
+                                </div>
+								<div style="background: white;height: 50px;line-height: 50px;padding: 0 10px;" onclick="window.location.href='./realMe.html'">
+								    <img src="./static/img/mine2.png" style="width: 30px;height: 30px;top: 50%;position: relative;transform: translate(0,-50%);">
+								    <span style="margin-left: 10px;" data-i18n="mine.realMe">实名认证</span>
+								    <img style="float: right;top: 50%;position: relative;transform: translate(0,-50%);" src="./static/img/jt.png">
+								</div>
+                                <div style="background: white;height: 50px;line-height: 50px;padding: 0 10px;" onclick="logout()">
+                                    <img src="./static/img/icon_my_pull_out@2x.png" style="width: 30px;height: 30px;top: 50%;position: relative;transform: translate(0,-50%);">
+                                    <span style="margin-left: 10px;" data-i18n="mine.logout">退出登陆</span>
+                                    <img style="float: right;top: 50%;position: relative;transform: translate(0,-50%);" src="./static/img/jt.png">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="jun-empty"></div>
+                        <!--中部结束-->
+                    </div>
+                    <style>
+                        #langdiv span {
+                            display: inline-block;
+                            width: 100px;
+                            height: 50px;
+                            line-height: 50px;
+                            border-bottom: 2px solid;
+                        }
+                    </style>
+                    <div id="langdiv" style="display: none;position: fixed;height: 100%;background: rgb(0 0 0 / 63%);width: 100%;" onclick="showlang(0)">
+                        <div id="langlist" style="padding: 15px 0; display: block;position: relative;width: 80%;line-height: 30px;text-align: center;background: rgb(255 255 255);border-radius: 10px;top: 50%;left: 50%;transform: translate(-50%,-50%);">
+                            
+                        </div>
+                    </div>
+                    <div class="footer" id="footer">
+                        
+                    </div>
+                    <script type="text/javascript" src="./static/js/jquery-1.9.1.min.js"></script>
+                    <script src="./static/js/ajaxUtil.js"></script>
+                    <script src="./static/js/utils.js"></script>
+					<script src="./static/js/footer.js"></script>
+                    <script type="text/javascript">
+                        $(function() {
+                            // 初始化语言
+							let langlist=''
+							I18n.langlist.forEach(item=>{
+								console.log(item)
+								langlist+= `<span id="langcns" onclick="changelang('${item.value}')" >${item.name}</span><br>  `
+							})
+							$('#langlist').html(langlist)
+                            const savedLang = localStorage.getItem('preferredLanguage') || I18n.defaultLang;
+                            I18n.init(savedLang);
+                            
+                            var nav = "user";
+                            if (nav == "index") {
+                                $(".one").addClass("router-link-exact-active");
+                            }
+                            if (nav == "wallet") {
+                                $(".two").addClass("router-link-exact-active");
+                            }
+                            if (nav == "hold") {
+                                $(".three").addClass("router-link-exact-active");
+                            }
+                            if (nav == "yeb") {
+                                $(".four").addClass("router-link-exact-active");
+                            }
+                            if (nav == "user") {
+                                $(".five").addClass("router-link-exact-active");
+                            }
+                        })
+                    </script>
+                    <script>
+                        function showlang(id) {
+                            if (id == 1) {
+                                document.getElementById('langdiv').style.display = "block";
+                                // 更新语言选择器文本
+                                updateLangSelectorText();
+                            } else {
+                                document.getElementById('langdiv').style.display = "none";
+                            }
+                        }
+                        
+                        function updateLangSelectorText() {
+                            // 更新语言选择器中的文本
+                            if (window.I18n && window.I18n.t) {
+                                $('#langcns').text(I18n.t('common.zh'));
+                                $('#langen').text(I18n.t('common.en'));
+                            }
+                        }
+                    </script>
+                    <script>
+                        (async function() {
+                            console.log('开始执行...');
+                            let userInfo = await getUserInfo();
+                            $(".username").text(userInfo.phone);
+                            $(".userlevel").text(userInfo.level_name);
+                            
+                            AjaxUtil.get('/index/index/getConfigInfo').then(res => {
+                                var config = saveAppConfig(res.data);
+                                $(".f_mine_header").attr('src', baseConfig.baseUrl + config.login_img);
+                                $("#service").click(function(){
+                                    openServiceUrl(config.service);
+                                });
+                            });
+                            
+                            // 监听语言变化事件
+                            $(document).on('languageChanged', function(event, lang) {
+                                console.log('语言已切换到:', lang);
+                                // 重新加载用户信息中的文本
+                                if (userInfo.level_name) {
+                                    $(".userlevel").text(userInfo.level_name);
+                                }
+                            });
+                            
+                        })();
+                        
+                        function logout() {
+                            AjaxUtil.get('/index/user/logOut').then(res => {
+                                localStorage.clear();
+                                location.href = './login.html';
+                            });
+                        }
+                        function changelang(t) {
+                            if (t == "list") {
+                                $('#langlist').fadeToggle();
+                                return;
+                            } else {
+								console.log(t)
+                        		I18n.changeLanguage(t)
+                                $('#langlist').fadeToggle();
+								location.reload();
+                            }
+                        
+                        }
+                        // function changelang(t) {
+                        //     if (t == "list") {
+                        //         $('#langlist').fadeToggle();
+                        //         return;
+                        //     } else {
+                        //         // 使用I18n的多语言切换
+                        //         I18n.changeLanguage(t === 'zh' ? 'zh-CN' : 'en-US')
+                        //             .then(() => {
+                        //                 console.log('切换语言到:', t);
+                        //                 window.localStorage.setItem('preferredLanguage', t === 'zh' ? 'zh-CN' : 'en-US');
+                        //                 // 触发语言变化事件
+                        //                 $(document).trigger('languageChanged', [t === 'zh' ? 'zh-CN' : 'en-US']);
+                        //                 // 关闭语言选择器
+                        //                 showlang(0);
+                        //             })
+                                    
+                        //     }
+                        // }
+                    </script>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
